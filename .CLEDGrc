@@ -1,0 +1,12 @@
+{
+    "DATABASE": {
+        "USER": "hub",
+        "DATABASE": "central_ledger"
+    },
+    "MIGRATIONS": {
+        "DISABLED": true
+    },
+    "PROXY_CACHE": {
+        "enabled": false
+    }
+}

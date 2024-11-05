@@ -1,0 +1,15 @@
+{
+    "name": "@mojaloop/hub",
+    "version": "1.0.0",
+    "scripts": {
+        "migrate": "npm run migrate:latest && npm run seed:run",
+        "migrate:latest": "npx knex $npm_package_config_knex_als migrate:latest && npx knex $npm_package_config_knex_cl migrate:latest",
+        "seed:run": "npx knex seed:run $npm_package_config_knex_als && npx knex seed:run $npm_package_config_knex_cl"
+    },
+    "config": {
+        "knex": {
+            "als": "--knexfile ../account-lookup-service/config/knexfile.js",
+            "cl": "--knexfile ../central-ledger/config/knexfile.js"
+        }
+    }
+}

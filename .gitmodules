@@ -1,0 +1,16 @@
+[submodule "quoting-service"]
+	path = quoting-service
+	url = https://github.com/mojaloop/quoting-service.git
+	branch = minor/iso
+[submodule "central-ledger"]
+	path = central-ledger
+	url = https://github.com/mojaloop/central-ledger.git
+	branch = minor/iso
+[submodule "ml-api-adapter"]
+	path = ml-api-adapter
+	url = https://github.com/mojaloop/ml-api-adapter.git
+	branch = minor/iso
+[submodule "account-lookup-service"]
+	path = account-lookup-service
+	url = https://github.com/mojaloop/account-lookup-service.git
+	branch = minor/iso
