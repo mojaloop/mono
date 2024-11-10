@@ -2,6 +2,7 @@
     "name": "@mojaloop/hub",
     "version": "1.0.0",
     "scripts": {
+        "build": "true",
         "migrate": "npm run migrate:latest && npm run seed:run",
         "migrate:latest": "npx knex $npm_package_config_knex_als migrate:latest && npx knex $npm_package_config_knex_cl migrate:latest",
         "seed:run": "npx knex seed:run $npm_package_config_knex_als && npx knex seed:run $npm_package_config_knex_cl"
