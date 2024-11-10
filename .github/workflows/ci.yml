@@ -13,9 +13,9 @@ jobs:
           fetch-depth: 2
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4.1.0
         with:
-          node-version: 16
+          node-version: 22
       - name: Verify Change Logs
         run: node common/scripts/install-run-rush.js change --verify
       - name: Rush Install
