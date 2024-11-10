@@ -6,6 +6,12 @@
         "migrate:latest": "npx knex $npm_package_config_knex_als migrate:latest && npx knex $npm_package_config_knex_cl migrate:latest",
         "seed:run": "npx knex seed:run $npm_package_config_knex_als && npx knex seed:run $npm_package_config_knex_cl"
     },
+    "dependencies": {
+        "account-lookup-service": "workspace:*",
+        "@mojaloop/central-ledger": "workspace:*",
+        "@mojaloop/ml-api-adapter": "workspace:*",
+        "quoting-service": "workspace:*"
+    },
     "config": {
         "knex": {
             "als": "--knexfile ../account-lookup-service/config/knexfile.js",
