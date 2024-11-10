@@ -412,7 +412,7 @@
     //   "tags": [ "tools" ]
     // }
     {
-      "packageName": "hub",
+      "packageName": "@mojaloop/hub",
       "projectFolder": "hub"
     },
     {
