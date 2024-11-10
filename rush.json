@@ -412,6 +412,10 @@
     //   "tags": [ "tools" ]
     // }
     {
+      "packageName": "hub",
+      "projectFolder": "hub"
+    },
+    {
       "packageName": "account-lookup-service",
       "projectFolder": "account-lookup-service"
     },
