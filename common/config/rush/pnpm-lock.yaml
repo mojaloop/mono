@@ -382,6 +382,10 @@ importers:
       quoting-service:
         specifier: workspace:*
         version: link:../quoting-service
+    devDependencies:
+      knex:
+        specifier: 3.1.0
+        version: 3.1.0(mysql@2.18.1)
 
   ../../ml-api-adapter:
     dependencies:

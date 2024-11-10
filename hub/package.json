@@ -2,16 +2,22 @@
     "name": "@mojaloop/hub",
     "version": "1.0.0",
     "scripts": {
+        "_phase:build": "true",
+        "_phase:test": "npm run test",
         "build": "true",
         "migrate": "npm run migrate:latest && npm run seed:run",
         "migrate:latest": "npx knex $npm_package_config_knex_als migrate:latest && npx knex $npm_package_config_knex_cl migrate:latest",
-        "seed:run": "npx knex seed:run $npm_package_config_knex_als && npx knex seed:run $npm_package_config_knex_cl"
+        "seed:run": "npx knex seed:run $npm_package_config_knex_als && npx knex seed:run $npm_package_config_knex_cl",
+        "test": "docker compose up -d && docker compose ps && npm run migrate"
     },
     "dependencies": {
         "account-lookup-service": "workspace:*",
         "@mojaloop/central-ledger": "workspace:*",
         "@mojaloop/ml-api-adapter": "workspace:*",
         "quoting-service": "workspace:*"
+    },
+    "devDependencies": {
+        "knex": "3.1.0"
     },
     "config": {
         "knex": {
