@@ -8,12 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          submodules: 'true'
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
-      - uses: actions/setup-node@v4.1.0
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
       - name: Verify Change Logs
