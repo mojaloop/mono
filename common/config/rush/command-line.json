@@ -36,6 +36,16 @@
       },
       "ignoreMissingScript": true,
       "allowWarningsOnSuccess": true
+    },
+    {
+      "name": "_phase:test-unit",
+      "dependencies": {
+        "self": [
+          "_phase:build"
+        ]
+      },
+      "ignoreMissingScript": true,
+      "allowWarningsOnSuccess": true
     }
   ],
   /**
@@ -217,6 +227,17 @@
         "_phase:test"
       ],
       "enableParallelism": true,
+      "incremental": true
+    },
+    {
+      "commandKind": "phased",
+      "name": "test-unit",
+      "summary": "Build and test all projects.",
+      "phases": [
+        "_phase:build",
+        "_phase:test-unit"
+      ],
+      "enableParallelism": false,
       "incremental": true
     }
   ],

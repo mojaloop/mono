@@ -69,17 +69,39 @@ services:
     command: bash /tmp/kafka/scripts/provision.sh
 
   ## Debug utilities
-  # kafka-debug-console:
-  #   # image: quay.io/cloudhut/kowl:v1.4.0
-  #   image: docker.redpanda.com/redpandadata/console:latest
-  #   deploy:
-  #     replicas: 1
-  #   restart: on-failure
-  #   hostname: kafka-debug-console
-  #   ports:
-  #   - "9080:8080"
-  #   environment:
-  #     - KAFKA_BROKERS=kafka:29092
+  redpanda-console:
+    container_name: hub-redpanda-console
+    image: docker.redpanda.com/redpandadata/console:${DEP_KAfKA_UI_VERSION}
+    deploy:
+      replicas: 1
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    networks:
+      - mojaloop-net
+    environment:
+      - KAFKA_BROKERS=kafka:29092
+    depends_on:
+      - kafka
+    profiles:
+      - debug
+
+  mongodb:
+    container_name: hub-mongodb
+    image: mongo:${DEP_MONGO_VERSION}
+    ports:
+      - "27017:27017"
+    networks:
+      - mojaloop-net
+    logging:
+        driver: none
+    healthcheck:
+      test: mongosh --eval 'db.runCommand("ping").ok' localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
 
 ##  To be used with proxyCache.type === 'redis'
 #  redis:

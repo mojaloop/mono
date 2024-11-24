@@ -430,6 +430,10 @@
     {
       "packageName": "quoting-service",
       "projectFolder": "quoting-service"
+    },
+    {
+      "packageName": "ml-testing-toolkit",
+      "projectFolder": "ml-testing-toolkit"
     }
   ]
 }

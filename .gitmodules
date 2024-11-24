@@ -14,3 +14,7 @@
 	path = account-lookup-service
 	url = https://github.com/mojaloop/account-lookup-service.git
 	branch = minor/iso
+[submodule "ml-testing-toolkit"]
+	path = ml-testing-toolkit
+	url = https://github.com/mojaloop/ml-testing-toolkit.git
+	branch = main

@@ -1,0 +1,282 @@
+services:
+  simulator:
+    image: mojaloop/simulator:${TEST_SIMULATOR_VERSION}
+    container_name: simulator
+    # ports:
+    #   - "8444:8444"
+    environment:
+      - LOG_LEVEL=info
+      - TRANSFERS_ENDPOINT=http://ml-api-adapter:3000
+      - QUOTES_ENDPOINT=http://quoting-service:3002
+      - PARTIES_ENDPOINT=http://account-lookup-service:4002
+      - TRANSACTION_REQUESTS_ENDPOINT=http://transaction-request-service:4003
+      - TRANSFERS_FULFIL_RESPONSE_DISABLED=false
+    networks:
+      - mojaloop-net
+    healthcheck:
+      test: wget -q http://127.0.0.1:8444/health -O /dev/null || exit 1
+      timeout: 20s
+      retries: 10
+      interval: 30s
+
+  fx-provider1-sdk:
+    image: mojaloop/sdk-scheme-adapter:${SDK_SCHEME_ADAPTER_VERSION}
+    env_file: envs/fx-provider.env
+    depends_on:
+      - redis
+      - mojaloop-testing-toolkit
+    command: yarn nx run modules-api-svc:start:debug
+    user: root
+    networks:
+      - mojaloop-net
+    profiles:
+      - fx-sdk
+
+  fx-payerdfsp-sdk:
+    image: mojaloop/sdk-scheme-adapter:${SDK_SCHEME_ADAPTER_VERSION}
+    env_file: envs/fx-payerdfsp-sdk.env
+    depends_on:
+      - redis
+      - mojaloop-testing-toolkit
+    command: yarn nx run modules-api-svc:start:debug
+    user: root
+    networks:
+      - mojaloop-net
+    profiles:
+      - fx-sdk
+
+  fx-payeedfsp-sdk:
+    image: mojaloop/sdk-scheme-adapter:${SDK_SCHEME_ADAPTER_VERSION}
+    env_file: envs/fx-payeedfsp-sdk.env
+    depends_on:
+      - redis
+      - mojaloop-testing-toolkit
+    command: yarn nx run modules-api-svc:start:debug
+    user: root
+    networks:
+      - mojaloop-net
+    profiles:
+      - fx-sdk
+
+  mojaloop-testing-toolkit:
+    image: mojaloop/ml-testing-toolkit:${TEST_TTK_SVC_VERSION}
+    volumes:
+      - "./docker/ml-testing-toolkit/spec_files:/opt/app/spec_files"
+      - "./docker/ml-testing-toolkit/test-cases:/opt/app/examples"
+    ports:
+      - "9440:4040"
+      - "9550:5050"
+    user: root
+    command:
+      - sh
+      - -c
+      - "npm start"
+    networks:
+      - mojaloop-net
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z -v localhost 4040"]
+      interval: 5s
+      timeout: 10s
+      start_period: 10s
+      retries: 10
+    profiles:
+      - testing-toolkit
+      - all-services
+
+  mojaloop-testing-toolkit-ui:
+    image: mojaloop/ml-testing-toolkit-ui:${TEST_TTK_UI_VERSION}
+    ports:
+      - "9660:6060"
+    environment:
+      ## Change localhost to the host IP if you are running the UI on a different machine
+      - API_BASE_URL=http://localhost:9550
+      - AUTH_ENABLED=FALSE
+    command:
+      - sh
+      - /usr/share/nginx/start.sh
+    user: root
+    networks:
+      - mojaloop-net
+    profiles:
+      - testing-toolkit
+      - all-services
+
+  ttk-provisioning:
+    image: mojaloop/ml-testing-toolkit-client-lib:${TEST_TTK_CLI_VERSION}
+    volumes:
+      - "./docker/ml-testing-toolkit/test-cases/collections:/opt/app/collections"
+      - "./docker/ml-testing-toolkit/test-cases/environments:/opt/app/environments"
+      - "./reports:/opt/app/reports"
+    depends_on:
+      mojaloop-testing-toolkit:
+        condition: service_healthy
+      central-ledger:
+        condition: service_healthy
+      ml-api-adapter:
+        condition: service_healthy
+      account-lookup-service:
+        condition: service_healthy
+      quoting-service:
+        condition: service_healthy
+      quoting-service-handler:
+        condition: service_healthy
+    networks:
+      - mojaloop-net
+    command:
+      - sh
+      - -c
+      - "npm run cli -- -u http://mojaloop-testing-toolkit:5050 -l 2 -i collections/provisioning -e environments/default-env.json --labels std --save-report true --report-format html --report-target file://reports/ttk-provisioning-report.html"
+    user: root
+    profiles:
+      - ttk-provisioning
+
+  ttk-provisioning-fx:
+    image: mojaloop/ml-testing-toolkit-client-lib:${TEST_TTK_CLI_VERSION}
+    volumes:
+      - "./docker/ml-testing-toolkit/test-cases/collections:/opt/app/collections"
+      - "./docker/ml-testing-toolkit/test-cases/environments:/opt/app/environments"
+      - "./reports:/opt/app/reports"
+    depends_on:
+      mojaloop-testing-toolkit:
+        condition: service_healthy
+      central-ledger:
+        condition: service_healthy
+      ml-api-adapter:
+        condition: service_healthy
+      account-lookup-service:
+        condition: service_healthy
+      quoting-service:
+        condition: service_healthy
+      quoting-service-handler:
+        condition: service_healthy
+    networks:
+      - mojaloop-net
+    command:
+      - sh
+      - -c
+      - "npm run cli -- -u http://mojaloop-testing-toolkit:5050 -l 2 -i collections/provisioning -e environments/default-env.json --labels std,fx --save-report true --report-format html --report-target file://reports/ttk-provisioning-fx-report.html"
+    user: root
+    profiles:
+      - ttk-provisioning-fx
+
+  ttk-provisioning-fx-sdk:
+    image: mojaloop/ml-testing-toolkit-client-lib:${TEST_TTK_CLI_VERSION}
+    volumes:
+      - "./docker/ml-testing-toolkit/test-cases/collections:/opt/app/collections"
+      - "./docker/ml-testing-toolkit/test-cases/environments:/opt/app/environments"
+      - "./reports:/opt/app/reports"
+    depends_on:
+      mojaloop-testing-toolkit:
+        condition: service_healthy
+      central-ledger:
+        condition: service_healthy
+      ml-api-adapter:
+        condition: service_healthy
+      account-lookup-service:
+        condition: service_healthy
+      quoting-service:
+        condition: service_healthy
+      quoting-service-handler:
+        condition: service_healthy
+    networks:
+      - mojaloop-net
+    command:
+      - sh
+      - -c
+      - "npm run cli -- -u http://mojaloop-testing-toolkit:5050 -l 2 -i collections/provisioning -e environments/default-env.json --labels std,fx,fx-sdk --save-report true --report-format html --report-target file://reports/ttk-provisioning-fx-report.html"
+    user: root
+    profiles:
+      - ttk-provisioning-fx-sdk
+
+  ttk-tests:
+    image: mojaloop/ml-testing-toolkit-client-lib:${TEST_TTK_CLI_VERSION}
+    volumes:
+      - "./docker/ml-testing-toolkit/test-cases/collections:/opt/app/collections"
+      - "./docker/ml-testing-toolkit/test-cases/environments:/opt/app/environments"
+      - "./reports:/opt/app/reports"
+    depends_on:
+      mojaloop-testing-toolkit:
+        condition: service_healthy
+      central-ledger:
+        condition: service_healthy
+      ml-api-adapter:
+        condition: service_healthy
+      account-lookup-service:
+        condition: service_healthy
+      quoting-service:
+        condition: service_healthy
+      quoting-service-handler:
+        condition: service_healthy
+      ttk-provisioning:
+        condition: service_completed_successfully
+    networks:
+      - mojaloop-net
+    command:
+      - sh
+      - -c
+      - "npm run cli -- -u http://mojaloop-testing-toolkit:5050 -l 2 -i collections/tests -e environments/default-env.json --labels std --report-format html --save-report true --report-target file://reports/ttk-func-tests-report.html"
+    user: root
+    profiles:
+      - ttk-tests
+
+  ttk-fx-tests:
+    image: mojaloop/ml-testing-toolkit-client-lib:${TEST_TTK_CLI_VERSION}
+    volumes:
+      - "./docker/ml-testing-toolkit/test-cases/collections:/opt/app/collections"
+      - "./docker/ml-testing-toolkit/test-cases/environments:/opt/app/environments"
+      - "./reports:/opt/app/reports"
+    depends_on:
+      mojaloop-testing-toolkit:
+        condition: service_healthy
+      central-ledger:
+        condition: service_healthy
+      ml-api-adapter:
+        condition: service_healthy
+      account-lookup-service:
+        condition: service_healthy
+      quoting-service:
+        condition: service_healthy
+      quoting-service-handler:
+        condition: service_healthy
+      ttk-provisioning-fx:
+        condition: service_completed_successfully
+    networks:
+      - mojaloop-net
+    command:
+      - sh
+      - -c
+      - "npm run cli -- -u http://mojaloop-testing-toolkit:5050 -l 2 -i collections/tests -e environments/default-env.json --labels std,fx --report-format html --save-report true --report-target file://reports/ttk-func-tests-report.html"
+    user: root
+    profiles:
+      - ttk-fx-tests
+
+  ttk-fx-sdk-tests:
+    image: mojaloop/ml-testing-toolkit-client-lib:${TEST_TTK_CLI_VERSION}
+    volumes:
+      - "./docker/ml-testing-toolkit/test-cases/collections:/opt/app/collections"
+      - "./docker/ml-testing-toolkit/test-cases/environments:/opt/app/environments"
+      - "./reports:/opt/app/reports"
+    depends_on:
+      mojaloop-testing-toolkit:
+        condition: service_healthy
+      central-ledger:
+        condition: service_healthy
+      ml-api-adapter:
+        condition: service_healthy
+      account-lookup-service:
+        condition: service_healthy
+      quoting-service:
+        condition: service_healthy
+      quoting-service-handler:
+        condition: service_healthy
+      ttk-provisioning-fx:
+        condition: service_completed_successfully
+    networks:
+      - mojaloop-net
+    command:
+      - sh
+      - -c
+      - "npm run cli -- -u http://mojaloop-testing-toolkit:5050 -l 2 -i collections/tests -e environments/default-env.json --labels std,fx,fx-sdk --report-format html --save-report true --report-target file://reports/ttk-func-tests-report.html"
+    user: root
+    profiles:
+      - ttk-fx-sdk-tests
