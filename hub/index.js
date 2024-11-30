@@ -12,7 +12,6 @@ const maConfig = require('@mojaloop/ml-api-adapter/src/lib/config')
 const maRoutes = require('@mojaloop/ml-api-adapter/src/api/routes')
 
 async function main() {
-    await als.initializeApi(alsConfig)
     await qs()
     qsHandlersStart(
         () => qsHandlersInit.startFn([
@@ -43,6 +42,7 @@ async function main() {
         handlers: [{ type: 'notification', enabled: true }],
         runHandlers: true
     })
+    await als.initializeApi(alsConfig)
 }
 
 main().catch(console.error)

@@ -1,5 +1,6 @@
 {
     "DATABASE": {
+        "HOST": "host.docker.internal",
         "USER": "hub",
         "DATABASE": "account_lookup"
     },

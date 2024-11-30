@@ -9,15 +9,15 @@ services:
     container_name: hub-mysql
     deploy:
       replicas: 1
-    # Disable logging as it is far too verbose for debugging locally
     # logging:
     #   driver: none
     ports:
       - "3306:3306"
     volumes:
-      # Note: this fixes the permissions issue, but docker-compose up will fail on first attempt
-      - ./init/sql/:/docker-entrypoint-initdb.d/
       - mysql_data:/var/lib/mysql
+    configs:
+      - source: mysql-init.sql
+        target: /docker-entrypoint-initdb.d/mysql-init.sql
     environment:
       - MYSQL_USER=${DBUSER:-central_ledger}
       - MYSQL_PASSWORD=${DBPASS:-password}
@@ -39,7 +39,7 @@ services:
       ALLOW_PLAINTEXT_LISTENER: "yes"
       KAFKA_ADVERTISED_HOST_NAME: hub-kafka
       KAFKA_CFG_LISTENERS: CONTROLLER://:9093,LISTENER_DOCKER://:29092,LISTENER_EXTERN://:9092
-      KAFKA_CFG_ADVERTISED_LISTENERS: LISTENER_DOCKER://hub-kafka:29092,LISTENER_EXTERN://localhost:9092
+      KAFKA_CFG_ADVERTISED_LISTENERS: LISTENER_DOCKER://hub-kafka:29092,LISTENER_EXTERN://host.docker.internal:9092
       KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,LISTENER_DOCKER:PLAINTEXT,LISTENER_EXTERN:PLAINTEXT
       KAFKA_CFG_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -64,21 +64,20 @@ services:
     image: docker.io/bitnami/kafka:3.5
     depends_on:
       - kafka
-    volumes:
-      - ./init/kafka:/tmp/kafka/scripts
+    configs:
+      - source: kafka-init.sh
+        target: /tmp/kafka/scripts/provision.sh
     command: bash /tmp/kafka/scripts/provision.sh
 
   ## Debug utilities
   redpanda-console:
     container_name: hub-redpanda-console
-    image: docker.redpanda.com/redpandadata/console:${DEP_KAfKA_UI_VERSION}
+    image: docker.redpanda.com/redpandadata/console:v2.7.2
     deploy:
       replicas: 1
     restart: on-failure
     ports:
       - "8080:8080"
-    networks:
-      - mojaloop-net
     environment:
       - KAFKA_BROKERS=kafka:29092
     depends_on:
@@ -88,13 +87,11 @@ services:
 
   mongodb:
     container_name: hub-mongodb
-    image: mongo:${DEP_MONGO_VERSION}
+    image: mongo:6.0.5
     ports:
       - "27017:27017"
-    networks:
-      - mojaloop-net
-    logging:
-        driver: none
+    # logging:
+    #     driver: none
     healthcheck:
       test: mongosh --eval 'db.runCommand("ping").ok' localhost:27017/test --quiet
       interval: 10s
@@ -118,3 +115,68 @@ services:
 #      - redis-node-5
 #    ports:
 #      - "6379:6379"
+
+configs:
+  mysql-init.sql:
+    content: |
+      -- create databases
+      CREATE DATABASE IF NOT EXISTS `central_ledger`;
+      CREATE DATABASE IF NOT EXISTS `account_lookup`;
+      -- create root user and grant rights
+      CREATE USER 'hub' @'%' identified WITH mysql_native_password by 'password';
+      GRANT ALL ON *.* TO 'hub' @'%';
+      FLUSH PRIVILEGES;
+  kafka-init.sh:
+    content: |
+      #!/bin/bash
+
+      KAFKAHOST="$${1:-hub-kafka}"
+      KAFKAPORT="$${2:-29092}"
+
+      # blocks until kafka is reachable
+      echo -e "------------------------------------------"
+      echo -e "Listing current kafka topics"
+      echo -e "__________________________________________"
+      kafka-topics.sh --bootstrap-server $$KAFKAHOST:$$KAFKAPORT --list
+      echo -e ""
+      echo -e "------------------------------------------"
+      echo -e "Creating kafka topics"
+      echo -e "__________________________________________"
+
+
+      # List of topics to create
+      topics=(
+        "topic-admin-transfer"
+        "topic-bulk-fulfil"
+        "topic-bulk-get"
+        "topic-bulk-prepare"
+        "topic-bulk-processing"
+        "topic-bulkquotes-get"
+        "topic-bulkquotes-post"
+        "topic-bulkquotes-put"
+        "topic-fx-quotes-get"
+        "topic-fx-quotes-post"
+        "topic-fx-quotes-put"
+        "topic-notification-event"
+        "topic-quotes-get"
+        "topic-quotes-post"
+        "topic-quotes-put"
+        "topic-transfer-fulfil"
+        "topic-transfer-get"
+        "topic-transfer-position-batch"
+        "topic-transfer-position"
+        "topic-transfer-prepare"
+      )
+
+      # Loop through the topics and create them using kafka-topics.sh
+      for topic in "$${topics[@]}"
+      do
+        echo -e "--> Creating topic $$topic..."
+        kafka-topics.sh --bootstrap-server $$KAFKAHOST:$$KAFKAPORT --create --if-not-exists --topic "$$topic" --replication-factor 1 --partitions 1
+      done
+
+      echo -e ""
+      echo -e "------------------------------------------"
+      echo -e "Successfully created the following topics:"
+      echo -e "__________________________________________"
+      kafka-topics.sh --bootstrap-server $$KAFKAHOST:$$KAFKAPORT --list

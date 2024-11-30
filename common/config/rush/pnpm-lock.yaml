@@ -188,9 +188,6 @@ importers:
       '@hapi/inert':
         specifier: 7.1.0
         version: 7.1.0
-      '@hapi/joi':
-        specifier: 17.1.1
-        version: 17.1.1
       '@hapi/vision':
         specifier: 7.0.3
         version: 7.0.3
@@ -271,10 +268,13 @@ importers:
         version: 8.0.0(@hapi/boom@10.0.1)(@hapi/hapi@21.3.12)(joi@17.13.3)
       hapi-swagger:
         specifier: 17.3.0
-        version: 17.3.0(@hapi/hapi@21.3.12)
+        version: 17.3.0(@hapi/hapi@21.3.12)(joi@17.13.3)
       ilp-packet:
         specifier: 2.2.0
         version: 2.2.0
+      joi:
+        specifier: 17.13.3
+        version: 17.13.3
       knex:
         specifier: 3.1.0
         version: 3.1.0(mysql@2.18.1)
@@ -454,7 +454,7 @@ importers:
         version: 8.0.0(@hapi/boom@10.0.1)(@hapi/hapi@21.3.12)(joi@17.13.3)
       hapi-swagger:
         specifier: 17.3.0
-        version: 17.3.0(@hapi/hapi@21.3.12)
+        version: 17.3.0(@hapi/hapi@21.3.12)(joi@17.13.3)
       mustache:
         specifier: 4.2.0
         version: 4.2.0
@@ -626,7 +626,7 @@ importers:
         version: 3.0.0
       hapi-swagger:
         specifier: 17.3.0
-        version: 17.3.0(@hapi/hapi@21.3.12)
+        version: 17.3.0(@hapi/hapi@21.3.12)(joi@17.13.3)
       ilp-packet:
         specifier: 3.1.3
         version: 3.1.3
@@ -1467,13 +1467,6 @@ packages:
       '@hapi/hoek': 11.0.7
     dev: false
 
-  /@hapi/address@4.1.0:
-    resolution: {integrity: sha512-SkszZf13HVgGmChdHo/PxchnSaCJ6cetVqLzyciudzZRT0jcOouIF/Q93mgjw8cce+D+4F4C1Z/WrfFN+O3VHQ==}
-    deprecated: Moved to 'npm install @sideway/address'
-    dependencies:
-      '@hapi/hoek': 9.3.0
-    dev: false
-
   /@hapi/ammo@6.0.1:
     resolution: {integrity: sha512-pmL+nPod4g58kXrMcsGLp05O2jF4P2Q3GiL8qYV7nKYEh3cGf+rV4P5Jyi2Uq0agGhVU63GtaSAfBEZOlrJn9w==}
     dependencies:
@@ -1581,11 +1574,6 @@ packages:
     resolution: {integrity: sha512-w+lKW+yRrLhJu620jT3y+5g2mHqnKfepreykvdOcl9/6up8GrQQn+l3FRTsjHTKbkbfQFkuksHpdv2EcpKcJ4Q==}
     dev: false
 
-  /@hapi/formula@2.0.0:
-    resolution: {integrity: sha512-V87P8fv7PI0LH7LiVi8Lkf3x+KCO7pQozXRssAHNXXL9L1K+uyu4XypLXwxqVDKgyQai6qj3/KteNlrqDx4W5A==}
-    deprecated: Moved to 'npm install @sideway/formula'
-    dev: false
-
   /@hapi/good@9.0.1:
     resolution: {integrity: sha512-zHSjw+LieqDgu5pXLUHqUJTMSgBKIdKHwxmXNoh9qVz+kSPQH463ol6OEBSTVdy0yQawKVI4eAyeqown++TpbA==}
     dependencies:
@@ -1689,17 +1677,6 @@ packages:
       '@hapi/hoek': 11.0.7
     dev: false
 
-  /@hapi/joi@17.1.1:
-    resolution: {integrity: sha512-p4DKeZAoeZW4g3u7ZeRo+vCDuSDgSvtsB/NpfjXEHTUjSeINAi/RrVOWiVQ1isaoLzMvFEhe8n5065mQq1AdQg==}
-    deprecated: Switch to 'npm install joi'
-    dependencies:
-      '@hapi/address': 4.1.0
-      '@hapi/formula': 2.0.0
-      '@hapi/hoek': 9.3.0
-      '@hapi/pinpoint': 2.0.1
-      '@hapi/topo': 5.1.0
-    dev: false
-
   /@hapi/mimos@7.0.1:
     resolution: {integrity: sha512-b79V+BrG0gJ9zcRx1VGcCI6r6GEzzZUgiGEJVoq5gwzuB2Ig9Cax8dUuBauQCFKvl2YWSWyOc8mZ8HDaJOtkew==}
     dependencies:
@@ -1729,10 +1706,6 @@ packages:
       '@hapi/content': 6.0.0
       '@hapi/hoek': 11.0.7
       '@hapi/nigel': 5.0.1
-    dev: false
-
-  /@hapi/pinpoint@2.0.1:
-    resolution: {integrity: sha512-EKQmr16tM8s16vTT3cA5L0kZZcTMU5DUOZTuvpnY738m+jyP3JIUj+Mm1xc1rsLkGBQ/gVnfKYPwOmPg1tUR4Q==}
     dev: false
 
   /@hapi/podium@5.0.1:
@@ -6565,7 +6538,7 @@ packages:
       swagger-parser: 9.0.1
     dev: false
 
-  /hapi-swagger@17.3.0(@hapi/hapi@21.3.12):
+  /hapi-swagger@17.3.0(@hapi/hapi@21.3.12)(joi@17.13.3):
     resolution: {integrity: sha512-mAW3KtNbuOjT7lmdZ+aRYK0lrNymEfo7fMfyV75QpnmcJqe5lK7WxJKQwRNnFrhoszOz1dP96emWTrIHOzvFCw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -6578,6 +6551,7 @@ packages:
       '@hapi/hoek': 11.0.4
       handlebars: 4.7.8
       http-status: 1.8.1
+      joi: 17.13.3
       swagger-parser: 10.0.3
       swagger-ui-dist: 5.17.14
     transitivePeerDependencies:

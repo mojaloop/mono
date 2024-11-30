@@ -1,0 +1,167 @@
+{
+    "_SIMPLE_ROUTING_MODE": false,
+    "DATABASE": {
+        "HOST": "host.docker.internal",
+        "USER": "hub",
+        "DATABASE": "central_ledger"
+    },
+    "KAFKA": {
+        "CONSUMER": {
+            "QUOTE": {
+                "POST": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "PUT": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "GET": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            },
+            "FX_QUOTE": {
+                "POST": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "PUT": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "GET": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            },
+            "BULK_QUOTE": {
+                "POST": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "PUT": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "GET": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            }
+        },
+        "PRODUCER": {
+            "EVENT": {
+                "POST": {
+                    "config": {
+                        "options": {
+                            "messageCharset": "utf8"
+                        },
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        },
+                        "topicConf": {
+                            "request.required.acks": "all"
+                        }
+                    }
+                }
+            },
+            "QUOTE": {
+                "POST": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "PUT": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "GET": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            },
+            "FX_QUOTE": {
+                "POST": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "PUT": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "GET": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            },
+            "BULK_QUOTE": {
+                "POST": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "PUT": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "GET": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

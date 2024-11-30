@@ -1,5 +1,6 @@
 {
     "DATABASE": {
+        "HOST": "host.docker.internal",
         "USER": "hub",
         "DATABASE": "central_ledger"
     },
@@ -8,5 +9,84 @@
     },
     "PROXY_CACHE": {
         "enabled": false
+    },
+    "KAFKA": {
+        "EVENT_TYPE_ACTION_TOPIC_MAP" : {
+            "POSITION":{
+                "PREPARE": "topic-transfer-position-batch",
+                "FX_PREPARE": "topic-transfer-position-batch",
+                "COMMIT": "topic-transfer-position-batch",
+                "RESERVE": "topic-transfer-position-batch",
+                "FX_RESERVE": "topic-transfer-position-batch",
+                "FX_TIMEOUT_RESERVED": "topic-transfer-position-batch",
+                "FX_ABORT": "topic-transfer-position-batch"
+            }
+        },
+        "CONSUMER": {
+            "TRANSFER": {
+                "PREPARE": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "GET": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "FULFIL": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "POSITION_BATCH": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            },
+            "ADMIN": {
+                "TRANSFER": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            }
+        },
+        "PRODUCER": {
+            "TRANSFER": {
+                "PREPARE": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "FULFIL": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                },
+                "POSITION": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            }
+        }
     }
 }

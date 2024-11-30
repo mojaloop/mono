@@ -1,0 +1,40 @@
+{
+  "KAFKA": {
+    "CONSUMER": {
+      "NOTIFICATION": {
+        "EVENT": {
+          "config": {
+            "rdkafkaConf": {
+              "metadata.broker.list": "host.docker.internal:9092"
+            }
+          }
+        }
+      }
+    },
+    "PRODUCER": {
+      "TRANSFER": {
+        "PREPARE": {
+          "config": {
+            "rdkafkaConf": {
+              "metadata.broker.list": "host.docker.internal:9092"
+            }
+          }
+        },
+        "FULFIL": {
+          "config": {
+            "rdkafkaConf": {
+              "metadata.broker.list": "host.docker.internal:9092"
+            }
+          }
+        },
+        "GET": {
+          "config": {
+            "rdkafkaConf": {
+              "metadata.broker.list": "host.docker.internal:9092"
+            }
+          }
+        }
+      }
+    }
+  }
+}
