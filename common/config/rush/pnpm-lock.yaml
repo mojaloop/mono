@@ -373,6 +373,9 @@ importers:
       account-lookup-service:
         specifier: workspace:*
         version: link:../account-lookup-service
+      ml-testing-toolkit:
+        specifier: workspace:*
+        version: link:../ml-testing-toolkit
       quoting-service:
         specifier: workspace:*
         version: link:../quoting-service
@@ -639,6 +642,9 @@ importers:
       json-rules-engine:
         specifier: 7.1.0
         version: 7.1.0
+      jsonwebtoken:
+        specifier: 8.5.1
+        version: 8.5.1
       lodash:
         specifier: 4.17.21
         version: 4.17.21

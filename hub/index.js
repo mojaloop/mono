@@ -1,17 +1,13 @@
-const als = require('account-lookup-service/src/server')
-const alsConfig = require('account-lookup-service/src/lib/config')
-const qs = require('quoting-service/src/server')
-const qsHandlersStart = require('quoting-service/src/lib/startingProcess')
-const qsHandlersInit = require('quoting-service/src/handlers/init')
+async function discovery() {
+    const als = require('account-lookup-service/src/server')
+    const alsConfig = require('account-lookup-service/src/lib/config')
+    await als.initializeApi(alsConfig)
+}
 
-const cl = require('@mojaloop/central-ledger/src/shared/setup')
-const clConfig = require('@mojaloop/central-ledger/src/lib/config')
-const clRoutes = require('@mojaloop/central-ledger/src/api/routes')
-const ma = require('@mojaloop/ml-api-adapter/src/shared/setup')
-const maConfig = require('@mojaloop/ml-api-adapter/src/lib/config')
-const maRoutes = require('@mojaloop/ml-api-adapter/src/api/routes')
-
-async function main() {
+async function agreement() {
+    const qs = require('quoting-service/src/server')
+    const qsHandlersStart = require('quoting-service/src/lib/startingProcess')
+    const qsHandlersInit = require('quoting-service/src/handlers/init')
     await qs()
     qsHandlersStart(
         () => qsHandlersInit.startFn([
@@ -21,6 +17,25 @@ async function main() {
         ]),
         qsHandlersInit.stopFn
     )
+}
+
+async function adapter() {
+    const ma = require('@mojaloop/ml-api-adapter/src/shared/setup')
+    const maConfig = require('@mojaloop/ml-api-adapter/src/lib/config')
+    const maRoutes = require('@mojaloop/ml-api-adapter/src/api/routes')
+    await ma.initialize({
+        service: 'api',
+        port: maConfig.PORT,
+        modules: [maRoutes],
+        handlers: [{ type: 'notification', enabled: true }],
+        runHandlers: true
+    })
+}
+
+async function ledger() {
+    const cl = require('@mojaloop/central-ledger/src/shared/setup')
+    const clConfig = require('@mojaloop/central-ledger/src/lib/config')
+    const clRoutes = require('@mojaloop/central-ledger/src/api/routes')
     await cl.initialize({
         service: 'api',
         port: clConfig.PORT,
@@ -35,14 +50,37 @@ async function main() {
         runMigrations: false,
         runHandlers: true
     })
-    await ma.initialize({
-        service: 'api',
-        port: maConfig.PORT,
-        modules: [maRoutes],
-        handlers: [{ type: 'notification', enabled: true }],
-        runHandlers: true
-    })
-    await als.initializeApi(alsConfig)
+}
+
+async function ttk() {
+    const RequestLogger = require('ml-testing-toolkit/src/lib/requestLogger')
+    const apiServer = require('ml-testing-toolkit/src/lib/api-server')
+    const socketServer = require('ml-testing-toolkit/src/lib/socket-server')
+    const Config = require('ml-testing-toolkit/src/lib/config')
+    const server = require('ml-testing-toolkit/src/server')
+    const mbConnectionManager = require('ml-testing-toolkit/src/lib/configuration-providers/mb-connection-manager')
+    const reportGenerator = require('ml-testing-toolkit/src/lib/report-generator/generator')
+
+    RequestLogger.logMessage('info', 'Toolkit Initialization started...', { notification: false })
+    await Config.loadSystemConfig()
+    await Config.loadUserConfig()
+    apiServer.startServer(5050)
+    socketServer.initServer(apiServer.getHttp())
+    const systemConfig = Config.getSystemConfig()
+    if (systemConfig.CONNECTION_MANAGER.ENABLED) {
+        await mbConnectionManager.initialize()
+    }
+    await reportGenerator.initialize()
+    await server.initialize()
+    RequestLogger.logMessage('info', 'Toolkit Initialization completed.', { notification: false, additionalData: welcomeMessage })
+}
+
+async function main() {
+    await agreement()
+    await ledger()
+    await adapter()
+    await discovery()
+    await ttk()
 }
 
 main().catch(console.error)
