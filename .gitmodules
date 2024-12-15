@@ -18,3 +18,11 @@
 	path = ml-testing-toolkit
 	url = https://github.com/mojaloop/ml-testing-toolkit.git
 	branch = main
+[submodule "ml-testing-toolkit-client-lib"]
+	path = ml-testing-toolkit-client-lib
+	url = https://github.com/mojaloop/ml-testing-toolkit-client-lib.git
+	branch = main
+[submodule "testing-toolkit-test-cases"]
+	path = testing-toolkit-test-cases
+	url = https://github.com/mojaloop/testing-toolkit-test-cases.git
+	branch = minor/iso

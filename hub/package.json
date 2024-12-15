@@ -11,11 +11,13 @@
         "test": "docker compose up -d --wait && docker compose ps && npm run migrate"
     },
     "dependencies": {
-        "account-lookup-service": "workspace:*",
         "@mojaloop/central-ledger": "workspace:*",
         "@mojaloop/ml-api-adapter": "workspace:*",
-        "quoting-service": "workspace:*",
-        "ml-testing-toolkit": "workspace:*"
+        "@mojaloop/ml-testing-toolkit-client-lib": "workspace:*",
+        "@mojaloop/testing-toolkit-test-cases": "workspace:*",
+        "account-lookup-service": "workspace:*",
+        "ml-testing-toolkit": "workspace:*",
+        "quoting-service": "workspace:*"
     },
     "devDependencies": {
         "knex": "3.1.0"

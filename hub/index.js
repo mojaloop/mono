@@ -1,3 +1,5 @@
+const { dirname } = require('path')
+
 async function discovery() {
     const als = require('account-lookup-service/src/server')
     const alsConfig = require('account-lookup-service/src/lib/config')
@@ -72,7 +74,27 @@ async function ttk() {
     }
     await reportGenerator.initialize()
     await server.initialize()
-    RequestLogger.logMessage('info', 'Toolkit Initialization completed.', { notification: false, additionalData: welcomeMessage })
+    RequestLogger.logMessage('info', 'Toolkit Initialization completed.', { notification: false, additionalData: 'TTK API at http://localhost:5050, Mojaloop API at http://localhost:4040' })
+}
+
+async function ttkClient() {
+    const router = require('@mojaloop/ml-testing-toolkit-client-lib/src/router')
+    router.cli({
+        mode: 'outbound',
+        reportFormat: 'json',
+        baseURL: 'http://localhost:5050',
+        logLevel: '2',
+        reportName: 'report',
+        reportAutoFilenameEnable: false,
+        breakRunOnError: false,
+        saveReport: false,
+        saveReportBaseUrl: null,
+        extraSummaryInformation: '',
+        environmentFile: require.resolve('./hub.json'),
+        inputFiles: [
+            dirname(require.resolve('@mojaloop/testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path/master.json'))
+        ].join(',')
+    })
 }
 
 async function main() {
@@ -81,6 +103,7 @@ async function main() {
     await adapter()
     await discovery()
     await ttk()
+    await ttkClient()
 }
 
 main().catch(console.error)
