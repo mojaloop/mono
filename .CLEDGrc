@@ -1,4 +1,9 @@
 {
+    "INSTRUMENTATION": {
+        "METRICS": {
+            "DISABLED": true
+        }
+    },
     "DATABASE": {
         "HOST": "host.docker.internal",
         "USER": "hub",

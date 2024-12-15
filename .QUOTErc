@@ -1,5 +1,10 @@
 {
     "_SIMPLE_ROUTING_MODE": false,
+    "INSTRUMENTATION": {
+        "METRICS": {
+            "DISABLED": true
+        }
+    },
     "DATABASE": {
         "HOST": "host.docker.internal",
         "USER": "hub",

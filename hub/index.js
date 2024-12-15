@@ -1,9 +1,10 @@
-const { dirname } = require('path')
+const { resolve } = require('path')
 
 async function discovery() {
     const als = require('account-lookup-service/src/server')
     const alsConfig = require('account-lookup-service/src/lib/config')
     await als.initializeApi(alsConfig)
+    await als.initializeAdmin(alsConfig)
 }
 
 async function agreement() {
@@ -24,11 +25,12 @@ async function agreement() {
 async function adapter() {
     const ma = require('@mojaloop/ml-api-adapter/src/shared/setup')
     const maConfig = require('@mojaloop/ml-api-adapter/src/lib/config')
-    const maRoutes = require('@mojaloop/ml-api-adapter/src/api/routes')
+    const MetricsPlugin = require('@mojaloop/central-services-metrics').plugin
+
     await ma.initialize({
         service: 'api',
         port: maConfig.PORT,
-        modules: [maRoutes],
+        modules: [!maConfig.INSTRUMENTATION_METRICS_DISABLED && MetricsPlugin].filter(Boolean),
         handlers: [{ type: 'notification', enabled: true }],
         runHandlers: true
     })
@@ -92,12 +94,21 @@ async function ttkClient() {
         extraSummaryInformation: '',
         environmentFile: require.resolve('./hub.json'),
         inputFiles: [
-            dirname(require.resolve('@mojaloop/testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path/master.json'))
+            resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path')
         ].join(',')
     })
 }
 
+async function alsMsisdnOracle() {
+    const oracle = require('@mojaloop/als-msisdn-oracle-svc').default.server
+    await oracle.run({
+        PORT: 4003,
+        HOST: 'localhost',
+    })
+}
+
 async function main() {
+    await alsMsisdnOracle()
     await agreement()
     await ledger()
     await adapter()

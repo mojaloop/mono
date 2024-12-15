@@ -26,3 +26,6 @@
 	path = testing-toolkit-test-cases
 	url = https://github.com/mojaloop/testing-toolkit-test-cases.git
 	branch = minor/iso
+[submodule "als-msisdn-oracle-svc"]
+	path = als-msisdn-oracle-svc
+	url = https://github.com/mojaloop/als-msisdn-oracle-svc.git

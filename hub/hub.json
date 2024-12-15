@@ -48,7 +48,7 @@
     "HOST_LEGACY_SIMULATOR": "http://moja-simulator",
     "HOST_ML_API_ADAPTER": "http://localhost:3000",
     "HOST_ORACLE_CONSENT": "http://moja-consent-oracle",
-    "HOST_ORACLE_MSISDN": "http://moja-als-msisdn-oracle",
+    "HOST_ORACLE_MSISDN": "http://localhost:4003",
     "HOST_ORACLE": "http://moja-simulator/oracle",
     "HOST_QUOTING_SERVICE_HANDLER": "http://moja-quoting-service-handler",
     "HOST_QUOTING_SERVICE": "http://moja-quoting-service",

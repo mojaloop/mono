@@ -1,12 +1,15 @@
 {
+    "INSTRUMENTATION": {
+        "METRICS": {
+            "DISABLED": true
+        }
+    },
     "DATABASE": {
         "HOST": "host.docker.internal",
         "USER": "hub",
         "DATABASE": "account_lookup"
     },
-    "MIGRATIONS": {
-        "DISABLED": true
-    },
+    "RUN_MIGRATIONS":"false",
     "PROXY_CACHE": {
         "enabled": false
     }

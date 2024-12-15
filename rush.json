@@ -442,6 +442,10 @@
     {
       "packageName": "@mojaloop/testing-toolkit-test-cases",
       "projectFolder": "testing-toolkit-test-cases"
+    },
+    {
+      "packageName": "@mojaloop/als-msisdn-oracle-svc",
+      "projectFolder": "als-msisdn-oracle-svc"
     }
   ]
 }

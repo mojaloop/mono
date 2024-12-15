@@ -11,7 +11,9 @@
         "test": "docker compose up -d --wait && docker compose ps && npm run migrate"
     },
     "dependencies": {
+        "@mojaloop/als-msisdn-oracle-svc": "workspace:*",
         "@mojaloop/central-ledger": "workspace:*",
+        "@mojaloop/central-services-metrics": "12.4.2",
         "@mojaloop/ml-api-adapter": "workspace:*",
         "@mojaloop/ml-testing-toolkit-client-lib": "workspace:*",
         "@mojaloop/testing-toolkit-test-cases": "workspace:*",
