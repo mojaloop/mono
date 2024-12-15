@@ -83,7 +83,7 @@ async function ttkClient() {
     const router = require('@mojaloop/ml-testing-toolkit-client-lib/src/router')
     router.cli({
         mode: 'outbound',
-        reportFormat: 'json',
+        reportFormat: 'html',
         baseURL: 'http://localhost:5050',
         logLevel: '2',
         reportName: 'report',
@@ -108,12 +108,14 @@ async function alsMsisdnOracle() {
 }
 
 async function main() {
-    await alsMsisdnOracle()
-    await agreement()
-    await ledger()
-    await adapter()
-    await discovery()
-    await ttk()
+    await Promise.all([
+        alsMsisdnOracle(),
+        agreement(),
+        ledger(),
+        adapter(),
+        discovery(),
+        ttk()
+    ])
     await ttkClient()
 }
 

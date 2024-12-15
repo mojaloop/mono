@@ -91,6 +91,24 @@
                         }
                     }
                 }
+            },
+            "NOTIFICATION": {
+                "EVENT": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
+            },
+            "ADMIN": {
+                "TRANSFER": {
+                    "config": {
+                        "rdkafkaConf": {
+                            "metadata.broker.list": "host.docker.internal:9092"
+                        }
+                    }
+                }
             }
         }
     }
