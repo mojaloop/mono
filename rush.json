@@ -417,26 +417,60 @@
     },
     {
       "packageName": "account-lookup-service",
+      "decoupledLocalDependencies": [
+        "@mojaloop/central-services-shared",
+        "@mojaloop/central-services-stream",
+        "@mojaloop/event-sdk",
+        "@mojaloop/ml-schema-transformer-lib",
+        "@mojaloop/sdk-standard-components"
+      ],
       "projectFolder": "account-lookup-service"
     },
     {
       "packageName": "@mojaloop/central-ledger",
+      "decoupledLocalDependencies": [
+        "@mojaloop/event-sdk",
+        "@mojaloop/central-services-stream",
+        "@mojaloop/central-services-shared"
+      ],
       "projectFolder": "central-ledger"
     },
     {
       "packageName": "@mojaloop/ml-api-adapter",
+      "decoupledLocalDependencies": [
+        "@mojaloop/event-sdk",
+        "@mojaloop/central-services-stream",
+        "@mojaloop/central-services-shared",
+        "@mojaloop/ml-schema-transformer-lib",
+        "@mojaloop/sdk-standard-components"
+      ],
       "projectFolder": "ml-api-adapter"
     },
     {
       "packageName": "quoting-service",
+      "decoupledLocalDependencies": [
+        "@mojaloop/central-services-shared",
+        "@mojaloop/central-services-stream",
+        "@mojaloop/event-sdk",
+        "@mojaloop/ml-schema-transformer-lib",
+        "@mojaloop/sdk-standard-components"
+      ],
       "projectFolder": "quoting-service"
     },
     {
       "packageName": "ml-testing-toolkit",
+      "decoupledLocalDependencies": [
+        "@mojaloop/ml-schema-transformer-lib",
+        "@mojaloop/sdk-standard-components"
+      ],
       "projectFolder": "ml-testing-toolkit"
     },
     {
       "packageName": "@mojaloop/ml-testing-toolkit-client-lib",
+      "decoupledLocalDependencies": [
+        "@mojaloop/sdk-standard-components",
+        "@mojaloop/central-services-shared"
+      ],
       "projectFolder": "ml-testing-toolkit-client-lib"
     },
     {
@@ -445,6 +479,10 @@
     },
     {
       "packageName": "@mojaloop/als-msisdn-oracle-svc",
+      "decoupledLocalDependencies": [
+        "@mojaloop/sdk-standard-components",
+        "@mojaloop/central-services-shared"
+      ],
       "projectFolder": "als-msisdn-oracle-svc"
     },
     {
@@ -453,10 +491,19 @@
     },
     {
       "packageName": "@mojaloop/sdk-scheme-adapter-api-svc",
+      "decoupledLocalDependencies": [
+        "@mojaloop/central-services-shared",
+        "@mojaloop/event-sdk",
+        "@mojaloop/ml-schema-transformer-lib",
+        "@mojaloop/sdk-standard-components"
+      ],
       "projectFolder": "sdk-scheme-adapter/modules/api-svc"
     },
     {
       "packageName": "@mojaloop/sdk-scheme-adapter-outbound-command-event-handler",
+      "decoupledLocalDependencies": [
+        "@mojaloop/central-services-shared"
+      ],
       "projectFolder": "sdk-scheme-adapter/modules/outbound-command-event-handler"
     },
     {
@@ -465,6 +512,9 @@
     },
     {
       "packageName": "@mojaloop/sdk-scheme-adapter-private-shared-lib",
+      "decoupledLocalDependencies": [
+        "@mojaloop/central-services-shared"
+      ],
       "projectFolder": "sdk-scheme-adapter/modules/private-shared-lib"
     },
     {
@@ -473,18 +523,30 @@
     },
     {
       "packageName": "@mojaloop/central-services-shared",
+      "decoupledLocalDependencies": [
+        "@mojaloop/event-sdk"
+      ],
       "projectFolder": "central-services-shared"
     },
     {
       "packageName": "@mojaloop/ml-schema-transformer-lib",
+      "decoupledLocalDependencies": [
+        "@mojaloop/central-services-shared"
+      ],
       "projectFolder": "ml-schema-transformer-lib"
     },
     {
       "packageName": "@mojaloop/sdk-standard-components",
+      "decoupledLocalDependencies": [
+        "@mojaloop/ml-schema-transformer-lib"
+      ],
       "projectFolder": "sdk-standard-components"
     },
     {
       "packageName": "@mojaloop/event-sdk",
+      "decoupledLocalDependencies": [
+        "@mojaloop/central-services-stream"
+      ],
       "projectFolder": "event-sdk"
     }
   ]
