@@ -167,7 +167,7 @@
     //    * Enables the "disallowInsecureSha1" policy.  The default value is false.
     //    */
     //   "enabled": true,
-    // 
+    //
     //   /**
     //    * In rare cases, a private NPM registry may continue to serve SHA1 hashes for very old
     //    * package versions, perhaps due to a caching issue or database migration glitch.  To avoid
@@ -195,8 +195,11 @@
    * PNPM documentation: https://pnpm.io/package_json#pnpmoverrides
    */
   "globalOverrides": {
-    // "example1": "^1.0.0",
-    // "example2": "npm:@company/example2@^1.0.0"
+    "@mojaloop/central-services-shared": "workspace:*",
+    "@mojaloop/central-services-stream": "workspace:*",
+    "@mojaloop/event-sdk": "workspace:*",
+    "@mojaloop/ml-schema-transformer-lib": "workspace:*",
+    "@mojaloop/sdk-standard-components": "workspace:*"
   },
 
   /**
