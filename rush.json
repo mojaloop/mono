@@ -24,7 +24,7 @@
    * Specify one of: "pnpmVersion", "npmVersion", or "yarnVersion".  See the Rush documentation
    * for details about these alternatives.
    */
-  "pnpmVersion": "9.15.0",
+  "pnpmVersion": "9.15.1",
   // "npmVersion": "6.14.15",
   // "yarnVersion": "1.9.4",
   /**
@@ -88,7 +88,7 @@
    * and set projectFolderMaxDepth to a large number.
    */
   // "projectFolderMinDepth": 2,
-  // "projectFolderMaxDepth": 2,
+  "projectFolderMaxDepth": 3,
   /**
    * Today the npmjs.com registry enforces fairly strict naming rules for packages, but in the early
    * days there was no standard and hardly any enforcement.  A few large legacy projects are still using
@@ -446,6 +446,46 @@
     {
       "packageName": "@mojaloop/als-msisdn-oracle-svc",
       "projectFolder": "als-msisdn-oracle-svc"
+    },
+    {
+      "packageName": "mojaloop-simulator",
+      "projectFolder": "mojaloop-simulator"
+    },
+    {
+      "packageName": "@mojaloop/sdk-scheme-adapter-api-svc",
+      "projectFolder": "sdk-scheme-adapter/modules/api-svc"
+    },
+    {
+      "packageName": "@mojaloop/sdk-scheme-adapter-outbound-command-event-handler",
+      "projectFolder": "sdk-scheme-adapter/modules/outbound-command-event-handler"
+    },
+    {
+      "packageName": "@mojaloop/sdk-scheme-adapter-outbound-domain-event-handler",
+      "projectFolder": "sdk-scheme-adapter/modules/outbound-domain-event-handler"
+    },
+    {
+      "packageName": "@mojaloop/sdk-scheme-adapter-private-shared-lib",
+      "projectFolder": "sdk-scheme-adapter/modules/private-shared-lib"
+    },
+    {
+      "packageName": "@mojaloop/central-services-stream",
+      "projectFolder": "central-services-stream"
+    },
+    {
+      "packageName": "@mojaloop/central-services-shared",
+      "projectFolder": "central-services-shared"
+    },
+    {
+      "packageName": "@mojaloop/ml-schema-transformer-lib",
+      "projectFolder": "ml-schema-transformer-lib"
+    },
+    {
+      "packageName": "@mojaloop/sdk-standard-components",
+      "projectFolder": "sdk-standard-components"
+    },
+    {
+      "packageName": "@mojaloop/event-sdk",
+      "projectFolder": "event-sdk"
     }
   ]
 }

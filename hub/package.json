@@ -13,12 +13,18 @@
     "dependencies": {
         "@mojaloop/als-msisdn-oracle-svc": "workspace:*",
         "@mojaloop/central-ledger": "workspace:*",
+        "@mojaloop/central-services-shared": "workspace:*",
         "@mojaloop/central-services-metrics": "12.4.2",
+        "@mojaloop/event-sdk": "workspace:*",
         "@mojaloop/ml-api-adapter": "workspace:*",
+        "@mojaloop/ml-schema-transformer-lib": "workspace:*",
         "@mojaloop/ml-testing-toolkit-client-lib": "workspace:*",
+        "@mojaloop/sdk-scheme-adapter-api-svc": "workspace:*",
+        "@mojaloop/sdk-standard-components": "workspace:*",
         "@mojaloop/testing-toolkit-test-cases": "workspace:*",
         "account-lookup-service": "workspace:*",
         "ml-testing-toolkit": "workspace:*",
+        "mojaloop-simulator": "workspace:*",
         "quoting-service": "workspace:*"
     },
     "devDependencies": {

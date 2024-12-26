@@ -29,3 +29,32 @@
 [submodule "als-msisdn-oracle-svc"]
 	path = als-msisdn-oracle-svc
 	url = https://github.com/mojaloop/als-msisdn-oracle-svc.git
+	branch = main
+[submodule "sdk-scheme-adapter"]
+	path = sdk-scheme-adapter
+	url = https://github.com/mojaloop/sdk-scheme-adapter.git
+	branch = minor/iso
+[submodule "mojaloop-simulator"]
+	path = mojaloop-simulator
+	url = https://github.com/mojaloop/mojaloop-simulator.git
+	branch = main
+[submodule "central-services-stream"]
+	path = central-services-stream
+	url = https://github.com/mojaloop/central-services-stream.git
+	branch = main
+[submodule "event-sdk"]
+	path = event-sdk
+	url = https://github.com/mojaloop/event-sdk.git
+	branch = main
+[submodule "central-services-shared"]
+	path = central-services-shared
+	url = https://github.com/mojaloop/central-services-shared.git
+	branch = main
+[submodule "ml-schema-transformer-lib"]
+	path = ml-schema-transformer-lib
+	url = https://github.com/mojaloop/ml-schema-transformer-lib.git
+	branch = main
+[submodule "sdk-standard-components"]
+	path = sdk-standard-components
+	url = https://github.com/mojaloop/sdk-standard-components.git
+	branch = main

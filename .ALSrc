@@ -1,4 +1,6 @@
 {
+    "ADMIN_PORT": 4011,
+    "API_PORT": 4012,
     "API_TYPE": "iso20022",
     "INSTRUMENTATION": {
         "METRICS": {

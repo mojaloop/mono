@@ -1,3 +1,10 @@
+process.env.PEER_ENDPOINT ||= 'localhost'
+process.env.BACKEND_ENDPOINT ||= 'localhost:3010'
+process.env.BACKEND_EVENT_CONSUMER_BROKER_LIST ||= 'host.docker.internal:9092'
+process.env.BACKEND_EVENT_PRODUCER_BROKER_LIST ||= 'host.docker.internal:9092'
+process.env.FSPIOP_EVENT_CONSUMER_BROKER_LIST ||= 'host.docker.internal:9092'
+process.env.FSPIOP_EVENT_PRODUCER_BROKER_LIST ||= 'host.docker.internal:9092'
+
 const { resolve } = require('path')
 
 async function discovery() {
@@ -93,8 +100,10 @@ async function ttkClient() {
         saveReportBaseUrl: null,
         extraSummaryInformation: '',
         environmentFile: require.resolve('./hub.json'),
+        labels: 'prod-tests',
         inputFiles: [
-            resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path')
+            resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path')
+            // resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path')
         ].join(',')
     })
 }
@@ -102,8 +111,49 @@ async function ttkClient() {
 async function alsMsisdnOracle() {
     const oracle = require('@mojaloop/als-msisdn-oracle-svc').default.server
     await oracle.run({
-        PORT: 4003,
+        PORT: 4010,
         HOST: 'localhost',
+    })
+}
+
+async function simulator() {
+    const simulator = require('mojaloop-simulator')
+    await simulator({
+        // CA_CERT_PATH : '/secrets/cacert.pem',
+        MULTI_DFSP : true,
+        FEE_MULTIPLIER : 0.05,
+        HTTPS_ENABLED : 'false',
+        LOG_INDENT : 0,
+        MODEL_DATABASE : ':memory:',
+        MUTUAL_TLS_ENABLED : 'false',
+        OUTBOUND_ENDPOINT : 'http://moja-sim-testfsp1-scheme-adapter:4001',
+        REPORT_API_LISTEN_PORT : 3012,
+        RULES_FILE : require.resolve('./rules.json'),
+        SCHEME_NAME : 'moja-sim-testfsp1',
+        SIMULATOR_API_LISTEN_PORT : 3010,
+        SIM_NAME : 'payeefsp',
+        SQLITE_LOG_FILE : ':memory:',
+        TEST_API_LISTEN_PORT : 3011,
+        // SERVER_CERT_PATH : '/secrets/servercert.pem',
+        // SERVER_KEY_PATH : '/secrets/serverkey.pem',
+        // SIM_BACKEND_SERVICE_NAME : 'sim-payeefsp-backend',
+        // SIM_CACHE_SERVICE_NAME : 'sim-payeefsp-cache',
+        // SIM_SCHEME_ADAPTER_SERVICE_NAME : 'sim-payeefsp-scheme-adapter',
+    })
+}
+
+async function sdk() {
+    const {start, config} = require('@mojaloop/sdk-scheme-adapter-api-svc')
+    await start({
+        ...config,
+        multiDfsp: true,
+        alsEndpoint: 'localhost:4002',
+        quotesEndpoint: 'localhost:3002',
+        fxQuotesEndpoint: 'localhost:3002',
+        transfersEndpoint: 'localhost:3000',
+        fxTransfersEndpoint: 'localhost:3000',
+        cacheUrl: 'redis://host.docker.internal:6379',
+        enableTestFeatures: true
     })
 }
 
@@ -114,8 +164,11 @@ async function main() {
         ledger(),
         adapter(),
         discovery(),
-        ttk()
+        ttk(),
+        simulator(),
+        sdk()
     ])
+    console.log('All services started')
     await ttkClient()
 }
 

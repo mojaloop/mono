@@ -12,7 +12,7 @@ services:
     # logging:
     #   driver: none
     ports:
-      - "3306:3306"
+      - 3306:3306
     volumes:
       - mysql_data:/var/lib/mysql
     configs:
@@ -24,7 +24,7 @@ services:
       - MYSQL_DATABASE=${DBUSER:-central_ledger}
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "mysql"]
+      test: mysqladmin ping -h mysql
       timeout: 20s
       retries: 10
       start_period: 40s
@@ -33,7 +33,7 @@ services:
     image: bitnami/kafka:3.5
     container_name: hub-kafka
     ports:
-      - "9092:9092"
+      - 9092:9092
     environment:
       # BITNAMI_DEBUG: "yes"
       ALLOW_PLAINTEXT_LISTENER: "yes"
@@ -77,7 +77,7 @@ services:
       replicas: 1
     restart: on-failure
     ports:
-      - "8080:8080"
+      - 8080:8080
     environment:
       - KAFKA_BROKERS=kafka:29092
     depends_on:
@@ -89,7 +89,7 @@ services:
     container_name: hub-mongodb
     image: mongo:6.0.5
     ports:
-      - "27017:27017"
+      - 27017:27017
     # logging:
     #     driver: none
     healthcheck:
@@ -98,6 +98,18 @@ services:
       timeout: 10s
       retries: 5
       start_period: 40s
+
+  redis:
+    image: redis:6.2.4-alpine
+    container_name: hub-redis
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: redis-cli ping
+      timeout: 20s
+      retries: 10
+      start_period: 40s
+      interval: 30s
 
 
 ##  To be used with proxyCache.type === 'redis'
@@ -166,6 +178,7 @@ configs:
         "topic-transfer-position-batch"
         "topic-transfer-position"
         "topic-transfer-prepare"
+        "topic-sdk-outbound-domain-events"
       )
 
       # Loop through the topics and create them using kafka-topics.sh
