@@ -1,60 +1,60 @@
 [submodule "quoting-service"]
 	path = quoting-service
 	url = https://github.com/mojaloop/quoting-service.git
-	branch = minor/iso
+	branch = monorepo
 [submodule "central-ledger"]
 	path = central-ledger
 	url = https://github.com/mojaloop/central-ledger.git
-	branch = minor/iso
+	branch = monorepo
 [submodule "ml-api-adapter"]
 	path = ml-api-adapter
 	url = https://github.com/mojaloop/ml-api-adapter.git
-	branch = minor/iso
+	branch = monorepo
 [submodule "account-lookup-service"]
 	path = account-lookup-service
 	url = https://github.com/mojaloop/account-lookup-service.git
-	branch = minor/iso
+	branch = monorepo
 [submodule "ml-testing-toolkit"]
 	path = ml-testing-toolkit
 	url = https://github.com/mojaloop/ml-testing-toolkit.git
-	branch = main
+	branch = monorepo
 [submodule "ml-testing-toolkit-client-lib"]
 	path = ml-testing-toolkit-client-lib
 	url = https://github.com/mojaloop/ml-testing-toolkit-client-lib.git
-	branch = main
+	branch = monorepo
 [submodule "testing-toolkit-test-cases"]
 	path = testing-toolkit-test-cases
 	url = https://github.com/mojaloop/testing-toolkit-test-cases.git
-	branch = minor/iso
+	branch = monorepo
 [submodule "als-msisdn-oracle-svc"]
 	path = als-msisdn-oracle-svc
 	url = https://github.com/mojaloop/als-msisdn-oracle-svc.git
-	branch = main
+	branch = monorepo
 [submodule "sdk-scheme-adapter"]
 	path = sdk-scheme-adapter
 	url = https://github.com/mojaloop/sdk-scheme-adapter.git
-	branch = minor/iso
+	branch = monorepo
 [submodule "mojaloop-simulator"]
 	path = mojaloop-simulator
 	url = https://github.com/mojaloop/mojaloop-simulator.git
-	branch = main
+	branch = monorepo
 [submodule "central-services-stream"]
 	path = central-services-stream
 	url = https://github.com/mojaloop/central-services-stream.git
-	branch = main
+	branch = monorepo
 [submodule "event-sdk"]
 	path = event-sdk
 	url = https://github.com/mojaloop/event-sdk.git
-	branch = main
+	branch = monorepo
 [submodule "central-services-shared"]
 	path = central-services-shared
 	url = https://github.com/mojaloop/central-services-shared.git
-	branch = main
+	branch = monorepo
 [submodule "ml-schema-transformer-lib"]
 	path = ml-schema-transformer-lib
 	url = https://github.com/mojaloop/ml-schema-transformer-lib.git
-	branch = main
+	branch = monorepo
 [submodule "sdk-standard-components"]
 	path = sdk-standard-components
 	url = https://github.com/mojaloop/sdk-standard-components.git
-	branch = main
+	branch = monorepo
