@@ -4,6 +4,10 @@ process.env.BACKEND_EVENT_CONSUMER_BROKER_LIST ||= 'host.docker.internal:9092'
 process.env.BACKEND_EVENT_PRODUCER_BROKER_LIST ||= 'host.docker.internal:9092'
 process.env.FSPIOP_EVENT_CONSUMER_BROKER_LIST ||= 'host.docker.internal:9092'
 process.env.FSPIOP_EVENT_PRODUCER_BROKER_LIST ||= 'host.docker.internal:9092'
+process.env.ALS_MSISDN_ORACLE_DATABASE_HOST ||= 'host.docker.internal'
+process.env.ALS_MSISDN_ORACLE_DATABASE_USER ||= 'hub'
+process.env.JWS_SIGNING_KEY_PATH ||= __dirname + '/sign.key'
+process.env.API_TYPE ||= 'iso20022'
 
 const { resolve } = require('path')
 
@@ -102,7 +106,7 @@ async function ttkClient() {
         environmentFile: require.resolve('./hub.json'),
         labels: 'prod-tests',
         inputFiles: [
-            resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path')
+            resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer')
             // resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path')
         ].join(',')
     })
@@ -111,8 +115,8 @@ async function ttkClient() {
 async function alsMsisdnOracle() {
     const oracle = require('@mojaloop/als-msisdn-oracle-svc').default.server
     await oracle.run({
-        PORT: 4010,
-        HOST: 'localhost',
+        PORT: 4003,
+        HOST: '0.0.0.0',
     })
 }
 
@@ -147,7 +151,7 @@ async function sdk() {
     await start({
         ...config,
         multiDfsp: true,
-        alsEndpoint: 'localhost:4002',
+        alsEndpoint: 'localhost:4012',
         quotesEndpoint: 'localhost:3002',
         fxQuotesEndpoint: 'localhost:3002',
         transfersEndpoint: 'localhost:3000',

@@ -1,5 +1,6 @@
 {
     "_SIMPLE_ROUTING_MODE": false,
+    "API_TYPE": "iso20022",
     "INSTRUMENTATION": {
         "METRICS": {
             "DISABLED": true

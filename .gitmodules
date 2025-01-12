@@ -1,19 +1,19 @@
 [submodule "quoting-service"]
 	path = quoting-service
 	url = https://github.com/mojaloop/quoting-service.git
-	branch = monorepo
+	branch = minor/iso
 [submodule "central-ledger"]
 	path = central-ledger
 	url = https://github.com/mojaloop/central-ledger.git
-	branch = monorepo
+	branch = minor/iso
 [submodule "ml-api-adapter"]
 	path = ml-api-adapter
 	url = https://github.com/mojaloop/ml-api-adapter.git
-	branch = monorepo
+	branch = minor/iso
 [submodule "account-lookup-service"]
 	path = account-lookup-service
 	url = https://github.com/mojaloop/account-lookup-service.git
-	branch = monorepo
+	branch = minor/iso
 [submodule "ml-testing-toolkit"]
 	path = ml-testing-toolkit
 	url = https://github.com/mojaloop/ml-testing-toolkit.git
@@ -33,7 +33,7 @@
 [submodule "sdk-scheme-adapter"]
 	path = sdk-scheme-adapter
 	url = https://github.com/mojaloop/sdk-scheme-adapter.git
-	branch = monorepo
+	branch = minor/iso
 [submodule "mojaloop-simulator"]
 	path = mojaloop-simulator
 	url = https://github.com/mojaloop/mojaloop-simulator.git
