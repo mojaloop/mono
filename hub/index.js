@@ -8,6 +8,8 @@ process.env.ALS_MSISDN_ORACLE_DATABASE_HOST ||= 'host.docker.internal'
 process.env.ALS_MSISDN_ORACLE_DATABASE_USER ||= 'hub'
 process.env.JWS_SIGNING_KEY_PATH ||= __dirname + '/sign.key'
 process.env.API_TYPE ||= 'iso20022'
+process.env.FEE_MULTIPLIER ||= '0.05'
+process.env.ILP_VERSION ||= '4'
 
 const { resolve } = require('path')
 
@@ -157,6 +159,7 @@ async function sdk() {
         transfersEndpoint: 'localhost:3000',
         fxTransfersEndpoint: 'localhost:3000',
         cacheUrl: 'redis://host.docker.internal:6379',
+        validateInboundJws: false,
         enableTestFeatures: true
     })
 }
