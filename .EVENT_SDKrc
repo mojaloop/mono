@@ -1,0 +1,2 @@
+LOG_FILTER=log:error, log:warning
+LOG_LEVEL=warn

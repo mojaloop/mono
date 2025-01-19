@@ -92,7 +92,7 @@ async function ttk() {
     RequestLogger.logMessage('info', 'Toolkit Initialization completed.', { notification: false, additionalData: 'TTK API at http://localhost:5050, Mojaloop API at http://localhost:4040' })
 }
 
-async function ttkClient() {
+async function ttkClient(what) {
     const router = require('@mojaloop/ml-testing-toolkit-client-lib/src/router')
     router.cli({
         mode: 'outbound',
@@ -106,11 +106,11 @@ async function ttkClient() {
         saveReportBaseUrl: null,
         extraSummaryInformation: '',
         environmentFile: require.resolve('./hub.json'),
-        labels: 'prod-tests',
+        // labels: 'prod-tests',
         inputFiles: [
-            resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer')
-            // resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path')
-        ].join(',')
+            what === 'gp'  && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer'),
+            what === 'provision' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path')
+        ].filter(Boolean).join(',')
     })
 }
 
@@ -153,6 +153,7 @@ async function sdk() {
     await start({
         ...config,
         multiDfsp: true,
+        logLevel: 'warn',
         alsEndpoint: 'localhost:4012',
         quotesEndpoint: 'localhost:3002',
         fxQuotesEndpoint: 'localhost:3002',
@@ -164,19 +165,51 @@ async function sdk() {
     })
 }
 
-async function main() {
+module.exports = async function main(what, options, command) {
+    console.log({what, options})
+    // if no options are provided, start all services
+    const allActive = !Object.keys(options).some(option => /oracle|agreement|ledger|adapter|discovery|ttk|simulator|sdk/.test(option))
+
     await Promise.all([
-        alsMsisdnOracle(),
-        agreement(),
-        ledger(),
-        adapter(),
-        discovery(),
-        ttk(),
-        simulator(),
-        sdk()
-    ])
+        (allActive || options.oracle) && alsMsisdnOracle(),
+        (allActive || options.agreement) && agreement(),
+        (allActive || options.ledger) && ledger(),
+        (allActive || options.adapter) && adapter(),
+        (allActive || options.discovery) && discovery(),
+        (allActive || options.ttk) && ttk(),
+        (allActive || options.simulator) && simulator(),
+        (allActive || options.sdk) && sdk()
+    ].filter(Boolean))
     console.log('All services started')
-    await ttkClient()
+    command === 'test' && await ttkClient(what)
 }
 
-main().catch(console.error)
+if (require.main === module) {
+    const { program } = require('commander');
+    const action = (what, options, command) => module.exports(what, options, command.name())
+    const addOptions = program => program
+        .option('-o, --oracle', 'Start the oracle service')
+        .option('-d, --discovery', 'Start the discovery service')
+        .option('-a, --agreement', 'Start the agreement service')
+        .option('-l, --ledger', 'Start the ledger service')
+        .option('-r, --adapter', 'Start the adapter service')
+        .option('-t, --ttk', 'Start the testing toolkit service')
+        .option('-s, --simulator', 'Start the simulator service')
+        .option('-k, --sdk', 'Start the sdk service')
+
+    addOptions(
+        program
+            .command('start [what]')
+            .description('Start the Mojaloop Hub')
+            .action(action)
+    )
+
+    addOptions(
+        program
+            .command('test <what>')
+            .description('Run the Mojaloop Hub tests')
+            .action(action)
+    )
+
+    program.parseAsync(process.argv)
+}

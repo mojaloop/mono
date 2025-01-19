@@ -941,6 +941,9 @@ importers:
       account-lookup-service:
         specifier: workspace:*
         version: link:../account-lookup-service
+      commander:
+        specifier: 13.0.0
+        version: 13.0.0
       ml-testing-toolkit:
         specifier: workspace:*
         version: link:../ml-testing-toolkit
