@@ -5,7 +5,7 @@
 [submodule "central-ledger"]
 	path = central-ledger
 	url = https://github.com/mojaloop/central-ledger.git
-	branch = minor/iso
+	branch = monorepo
 [submodule "ml-api-adapter"]
 	path = ml-api-adapter
 	url = https://github.com/mojaloop/ml-api-adapter.git

@@ -2,6 +2,12 @@
     "_SIMPLE_ROUTING_MODE": false,
     "API_TYPE": "iso20022",
     "ORIGINAL_PAYLOAD_STORAGE": "kafka",
+    "PROXY_CACHE": {
+        "enabled": false
+    },
+    "PAYLOAD_CACHE": {
+        "enabled": false
+    },
     "INSTRUMENTATION": {
         "METRICS": {
             "DISABLED": true

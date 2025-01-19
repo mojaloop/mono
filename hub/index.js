@@ -166,7 +166,6 @@ async function sdk() {
 }
 
 module.exports = async function main(what, options, command) {
-    console.log({what, options})
     // if no options are provided, start all services
     const allActive = !Object.keys(options).some(option => /oracle|agreement|ledger|adapter|discovery|ttk|simulator|sdk/.test(option))
 

@@ -480,6 +480,9 @@ importers:
       ilp-packet:
         specifier: 2.2.0
         version: 2.2.0
+      joi:
+        specifier: 17.13.3
+        version: 17.13.3
       knex:
         specifier: 3.1.0
         version: 3.1.0(mysql@2.18.1)(sqlite3@5.1.7)
