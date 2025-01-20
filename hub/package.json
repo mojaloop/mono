@@ -14,7 +14,7 @@
         "@mojaloop/als-msisdn-oracle-svc": "workspace:*",
         "@mojaloop/central-ledger": "workspace:*",
         "@mojaloop/central-services-shared": "workspace:*",
-        "@mojaloop/central-services-metrics": "12.4.2",
+        "@mojaloop/central-services-metrics": "12.4.3",
         "@mojaloop/event-sdk": "workspace:*",
         "@mojaloop/ml-api-adapter": "workspace:*",
         "@mojaloop/ml-schema-transformer-lib": "workspace:*",

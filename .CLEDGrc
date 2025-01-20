@@ -1,10 +1,5 @@
 {
     "_HOSTNAME": "http://localhost:3001",
-    "INSTRUMENTATION": {
-        "METRICS": {
-            "DISABLED": true
-        }
-    },
     "DATABASE": {
         "HOST": "host.docker.internal",
         "USER": "hub",
