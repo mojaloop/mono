@@ -33,7 +33,7 @@
 [submodule "sdk-scheme-adapter"]
 	path = sdk-scheme-adapter
 	url = https://github.com/mojaloop/sdk-scheme-adapter.git
-	branch = minor/iso
+	branch = master
 [submodule "mojaloop-simulator"]
 	path = mojaloop-simulator
 	url = https://github.com/mojaloop/mojaloop-simulator.git

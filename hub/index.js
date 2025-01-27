@@ -109,7 +109,8 @@ async function ttkClient(what) {
         // labels: 'prod-tests',
         inputFiles: [
             what === 'gp'  && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer'),
-            what === 'provision' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path')
+            what === 'provision' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path'),
+            what === 'settlement' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/other_tests/settlement_fx/settlement_tests.json')
         ].filter(Boolean).join(',')
     })
 }
@@ -165,19 +166,21 @@ async function sdk() {
     })
 }
 
+const services = /oracle|agreement|ledger|adapter|discovery|ttk|simulator|sdk/
+
 module.exports = async function main(what, options, command) {
     // if no options are provided, start all services
-    const allActive = !Object.keys(options).some(option => /oracle|agreement|ledger|adapter|discovery|ttk|simulator|sdk/.test(option))
+    const startAll = !Object.keys(options).some(option => services.test(option))
 
     await Promise.all([
-        (allActive || options.oracle) && alsMsisdnOracle(),
-        (allActive || options.agreement) && agreement(),
-        (allActive || options.ledger) && ledger(),
-        (allActive || options.adapter) && adapter(),
-        (allActive || options.discovery) && discovery(),
-        (allActive || options.ttk) && ttk(),
-        (allActive || options.simulator) && simulator(),
-        (allActive || options.sdk) && sdk()
+        (startAll || options.oracle) && alsMsisdnOracle(),
+        (startAll || options.agreement) && agreement(),
+        (startAll || options.ledger) && ledger(),
+        (startAll || options.adapter) && adapter(),
+        (startAll || options.discovery) && discovery(),
+        (startAll || options.ttk) && ttk(),
+        (startAll || options.simulator) && simulator(),
+        (startAll || options.sdk) && sdk()
     ].filter(Boolean))
     console.log('All services started')
     command === 'test' && await ttkClient(what)
@@ -186,7 +189,7 @@ module.exports = async function main(what, options, command) {
 if (require.main === module) {
     const { program } = require('commander');
     const action = (what, options, command) => module.exports(what, options, command.name())
-    const addOptions = program => program
+    const addServiceFlags = program => program
         .option('-o, --oracle', 'Start the oracle service')
         .option('-d, --discovery', 'Start the discovery service')
         .option('-a, --agreement', 'Start the agreement service')
@@ -196,18 +199,16 @@ if (require.main === module) {
         .option('-s, --simulator', 'Start the simulator service')
         .option('-k, --sdk', 'Start the sdk service')
 
-    addOptions(
-        program
-            .command('start [what]')
-            .description('Start the Mojaloop Hub')
-            .action(action)
+    addServiceFlags(program
+        .command('start [what]')
+        .description('Start the Mojaloop Hub')
+        .action(action)
     )
 
-    addOptions(
-        program
-            .command('test <what>')
-            .description('Run the Mojaloop Hub tests')
-            .action(action)
+    addServiceFlags(program
+        .command('test <what>')
+        .description('Run the Mojaloop Hub tests')
+        .action(action)
     )
 
     program.parseAsync(process.argv)
