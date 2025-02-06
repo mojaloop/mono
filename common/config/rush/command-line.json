@@ -239,6 +239,16 @@
       ],
       "enableParallelism": false,
       "incremental": true
+    },
+    {
+      "commandKind": "phased",
+      "name": "build",
+      "summary": "Build and test all projects.",
+      "phases": [
+        "_phase:build"
+      ],
+      "enableParallelism": false,
+      "incremental": true
     }
   ],
   /**

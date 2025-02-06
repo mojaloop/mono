@@ -20,4 +20,4 @@ echo "Running GP"
 echo "====================="
 UV_THREADPOOL_SIZE=30 node index.js test gp || true
 
-docker compose down
+docker compose stop
