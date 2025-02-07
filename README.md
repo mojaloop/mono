@@ -2,8 +2,8 @@
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/en/download/) 18, 20 or 22
-- [Docker](https://docs.docker.com/get-docker/) (and docker-compose)
+- [Node.js](https://nodejs.org/en/download/) version 18 or 20
+- [Docker](https://docs.docker.com/get-docker/) (and docker compose)
 
 ## Setup
 
@@ -44,7 +44,19 @@
 
     ```sh
     cd hub
-    docker-compose up -d --wait
+    docker compose up -d --wait
+    ```
+
+1. Set up docker DNS resolution for `host.docker.internal`
+
+   As this project was developed and tested inside a dev container,
+   the `host.docker.internal` DNS resolution is used for communication
+   with the backends running in docker. If you are running the project
+   on the host machine, you need to set up the DNS resolution for
+   `host.docker.internal` to point to the usual docker gateway IP address.
+
+    ```sh
+    sudo echo "172.17.0.1 host.docker.internal" | sudo tee -a /etc/hosts
     ```
 
 1. Create the MySQL schemas
@@ -52,6 +64,14 @@
     ```sh
     cd hub
     npm run migrate
+    ```
+
+1. Create .env file in the repo root
+
+   Due to some of submodules requirements, the `.env` file is needed.
+
+    ```sh
+    touch .env
     ```
 
 ## Running and testing
