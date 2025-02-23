@@ -1,0 +1,44 @@
+{
+    "name": "@mojaloop/mono-log",
+    "version": "1.0.0",
+    "description": "A server that collects log messages via UDP and sends them to connected web sockets",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "_phase:build": "npm run build",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "dependencies": {
+        "@hapi/hapi": "^21.3.12",
+        "@hapi/inert": "^7.1.0",
+        "split2": "^4.2.0",
+        "lru-cache": "^11.0.2",
+        "ws": "^8.18.0"
+    },
+    "devDependencies": {
+        "cra-template": "1.2.0",
+        "primereact": "^10.9.2",
+        "primeicons": "^7.0.0",
+        "primeflex": "^3.3.1",
+        "react": "^18",
+        "react-dom": "^18",
+        "react-scripts": "^5"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "author": "Kalin Krustev",
+    "license": "Apache-2.0"
+}

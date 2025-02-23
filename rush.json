@@ -416,6 +416,10 @@
       "projectFolder": "hub"
     },
     {
+      "packageName": "@mojaloop/mono-log",
+      "projectFolder": "mono-log"
+    },
+    {
       "packageName": "account-lookup-service",
       "decoupledLocalDependencies": [
         "@mojaloop/central-services-shared",
