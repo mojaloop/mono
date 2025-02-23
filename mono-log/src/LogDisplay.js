@@ -2,7 +2,7 @@ import React from 'react';
 import { DataTable } from 'primereact/datatable/datatable.esm.js';
 import { Column } from 'primereact/column/column.esm.js';
 import { MultiSelect } from 'primereact/multiselect/multiselect.esm.js';
-import { FilterMatchMode, FilterOperator } from 'primereact/api/api.esm.js';
+import { FilterMatchMode } from 'primereact/api/api.esm.js';
 
 const defaultSort = [{ field: 'ms', order: -1 }];
 const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
@@ -13,18 +13,11 @@ const bodyClassName = (rowData) => ({
     error: 'text-red-600',
 }[rowData.level]);
 
-const levels = [
-    { name: 'Debug', value: 'debug' },
-    { name: 'Info', value: 'info' },
-    { name: 'Warn', value: 'warn' },
-    { name: 'Error', value: 'error' },
-];
-
 const FORMAT = Symbol('FORMAT');
 const timeBody = (rowData) => (rowData.timestamp ?? new Date(rowData.ms - timezoneOffset).toISOString())?.replace('T', ' ').substring(5, 19);
 const messageBody = (rowData) => rowData?.[FORMAT] ? <pre>{JSON.stringify(rowData, undefined, 2)}</pre> : JSON.stringify(rowData);
 
-const logLevelFilter = (options) => {
+const filterElement = levels => (options) => {
     return (
         <MultiSelect
             value={options.value ?? ''}
@@ -35,7 +28,7 @@ const logLevelFilter = (options) => {
             placeholder="Any"
             className="p-column-filter"
             maxSelectedLabels={1}
-            style={{ minWidth: '14rem' }}
+            style={{ minWidth: '4rem' }}
         />
     );
 };
@@ -65,6 +58,27 @@ const LogDisplay = ({ logMessages }) => {
         }
     }, [refresh]);
 
+    // collect unique values for context, component, type, and method
+    const uniqueValues = React.useMemo(() => {
+        const uniqueValues = {};
+        logMessages.forEach((logMessage) => {
+            Object.keys(filters).forEach(key => {
+                if (logMessage[key]) {
+                    uniqueValues[key] = uniqueValues[key] ?? new Set();
+                    uniqueValues[key].add(logMessage[key]);
+                }
+            });
+        });
+        return uniqueValues;
+    }, [logMessages]);
+
+    const filterElements = React.useMemo(() => Object.keys(filters).reduce((options, key) => {
+        if (uniqueValues[key]) {
+            options[key] = filterElement(Array.from(uniqueValues[key]).map(value => ({ name: value, value })));
+        }
+        return options;
+    }, {}), [Object.values(uniqueValues).map(set => Array.from(set).sort().join()).join()]);
+
     return (
         <div className="flex-1">
             <DataTable
@@ -83,22 +97,38 @@ const LogDisplay = ({ logMessages }) => {
                 // rowClassName={rowClassName}
                 filters={filters}
                 filterDisplay="row"
-                onCellClick= {handleCellClick}
+                onCellClick={handleCellClick}
                 cellSelection
             >
                 <Column sortable style={{ width: "10rem" }} field="ms" header="Time"
                     body={timeBody}
                 />
-                <Column filter style={{ width: "10rem" }} field="level" header="Level"
-                    filterElement={logLevelFilter}
+                <Column style={{ width: "10rem" }} field="level" header="Level"
+                    filter
+                    filterElement={filterElements.level}
                     showFilterMenu={false}
-                    filterMenuStyle={{ width: '10rem' }}
                     bodyClassName={bodyClassName}
                 />
-                <Column style={{ width: "10rem" }} field="context" header="Context" />
-                <Column style={{ width: "10rem" }} field="component" header="Component" />
-                <Column style={{ width: "10rem" }} field="type" header="Type" />
-                <Column style={{ width: "10rem" }} field="method" header="Method" />
+                <Column style={{ width: "10rem" }} field="context" header="Context"
+                    filter
+                    filterElement={filterElements.context}
+                    showFilterMenu={false}
+                />
+                <Column style={{ width: "10rem" }} field="component" header="Component"
+                    filter
+                    filterElement={filterElements.component}
+                    showFilterMenu={false}
+                />
+                <Column style={{ width: "10rem" }} field="type" header="Type"
+                    filter
+                    filterElement={filterElements.type}
+                    showFilterMenu={false}
+                />
+                <Column style={{ width: "10rem" }} field="method" header="Method"
+                    filter
+                    filterElement={filterElements.method}
+                    showFilterMenu={false}
+                />
                 <Column style={{ width: "10rem" }} field="message" header="Message" body={messageBody} />
             </DataTable>
         </div>

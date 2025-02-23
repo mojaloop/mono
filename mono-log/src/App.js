@@ -6,13 +6,16 @@ const App = () => {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket('ws://' + window.location.host);
+    ws.current = new WebSocket('ws://' + window.location.host.replace(':3000', ':8080'));
     ws.current.onmessage = (event) => {
       let logMessage = event.data;
       try {
         logMessage = JSON.parse(event.data);
       } catch (e) {
         logMessage = { message: event.data };
+      }
+      if (logMessages.length > 1000) {
+        logMessages.pop();
       }
       setLogMessages((prevMessages) => [logMessage, ...prevMessages]);
     };
