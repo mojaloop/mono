@@ -27,9 +27,9 @@ jobs:
       - name: Add hosts to /etc/hosts
         run: sudo echo "172.17.0.1 host.docker.internal" | sudo tee -a /etc/hosts
       # - name: Rush test
-      #   run: rush test --verbose
+      #   run: node common/scripts/install-run-rush.js test --verbose
       - name: Rush deploy
-        run: rush deploy
+        run: node common/scripts/install-run-rush.js deploy
 
 # Build and publish image to GitHub Container Registry
       - name: Set up Docker Buildx
