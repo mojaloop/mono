@@ -20,7 +20,7 @@ const init = async () => {
         path: '/{param*}',
         handler: {
             directory: {
-                path: 'build',
+                path: `${import.meta.dirname}/build`,
                 index: ['index.html']
             }
         }
