@@ -1,7 +1,7 @@
 import Hapi from '@hapi/hapi';
 import inert from '@hapi/inert';
 import dgram from 'node:dgram';
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, WebSocket } from 'ws';
 import { LRUCache } from 'lru-cache';
 import split2 from 'split2';
 
