@@ -6,7 +6,7 @@ const App = () => {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket('ws://' + window.location.host.replace(':3000', ':8080'));
+    ws.current = new WebSocket('//' + window.location.host.replace(':3000', ':8080'));
     ws.current.onmessage = (event) => {
       let logMessage = event.data;
       try {
