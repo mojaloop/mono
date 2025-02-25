@@ -15,7 +15,7 @@ const bodyClassName = (rowData) => ({
 
 const FORMAT = Symbol('FORMAT');
 const timeBody = (rowData) => (rowData.timestamp ?? new Date(rowData.ms - timezoneOffset).toISOString())?.replace('T', ' ').substring(5, 19);
-const messageBody = (rowData) => rowData?.[FORMAT] ? <pre>{JSON.stringify(rowData, undefined, 2)}</pre> : JSON.stringify(rowData);
+const messageBody = (rowData) => rowData?.[FORMAT] ? <pre>{JSON.stringify(rowData, undefined, 2)}</pre> : (rowData?.message ?? JSON.stringify(rowData));
 
 const filterElement = levels => (options) => {
     return (
