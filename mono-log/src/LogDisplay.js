@@ -15,7 +15,22 @@ const bodyClassName = (rowData) => ({
 
 const FORMAT = Symbol('FORMAT');
 const timeBody = (rowData) => (rowData.timestamp ?? new Date(rowData.ms - timezoneOffset).toISOString())?.replace('T', ' ').substring(5, 19);
-const messageBody = (rowData) => rowData?.[FORMAT] ? <pre>{JSON.stringify(rowData, undefined, 2)}</pre> : (rowData?.message ?? JSON.stringify(rowData));
+
+const format = (data) => {
+    if (typeof data === 'object') {
+        return Object.keys(data).map(key => {
+            return (
+                <div key={key} style={{ marginLeft: '1rem', whiteSpace: 'pre-wrap', paddingLeft: '4rem', textIndent: '-4rem' }}>
+                    <span className='text-blue-600'>{key}</span>: {format(data[key])}
+                </div>
+            );
+        });
+    } else {
+        return <span className={typeof data === 'string' ? '' : 'text-green-600'}>{JSON.stringify(data)}</span>;
+    }
+}
+
+const messageBody = (rowData) => rowData?.[FORMAT] ? format(rowData) : (rowData?.message ?? JSON.stringify(rowData));
 
 const filterElement = levels => (options) => {
     return (
