@@ -19,6 +19,12 @@ const App = () => {
       }
       setLogMessages((prevMessages) => [logMessage, ...prevMessages]);
     };
+    ws.current.onclose = event => {
+      console.log('WebSocket closed', event);
+    };
+    ws.current.onerror = event => {
+      console.error('WebSocket error', event);
+    };
 
     return () => {
       ws.current.close();

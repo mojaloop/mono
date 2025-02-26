@@ -37,6 +37,7 @@ const init = async () => {
     const wss = new WebSocketServer({ server: server.listener });
 
     function heartbeat() {
+        console.log(`WebSocket heartbeat: ${this?._socket?.remoteAddress}:${this?._socket?.remotePort}`);
         this.isAlive = true;
     }
 
@@ -44,6 +45,9 @@ const init = async () => {
         ws.isAlive = true;
         ws.on('error', console.error);
         ws.on('pong', heartbeat);
+        ws.on('close', function wsClose(code, reason) {
+            console.log(`WebSocket ${ws?._socket?.remoteAddress}:${ws?._socket?.remotePort} closed`, code, reason);
+        });
     });
 
     const interval = setInterval(function ping() {
