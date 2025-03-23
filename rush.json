@@ -422,6 +422,9 @@
     {
       "packageName": "account-lookup-service",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-metrics",
+        "@mojaloop/central-services-error-handling",
+        "@mojaloop/central-services-logger",
         "@mojaloop/central-services-shared",
         "@mojaloop/central-services-stream",
         "@mojaloop/event-sdk",
@@ -433,6 +436,9 @@
     {
       "packageName": "@mojaloop/central-ledger",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-metrics",
+        "@mojaloop/central-services-error-handling",
+        "@mojaloop/central-services-logger",
         "@mojaloop/event-sdk",
         "@mojaloop/central-services-stream",
         "@mojaloop/central-services-shared"
@@ -442,6 +448,9 @@
     {
       "packageName": "@mojaloop/ml-api-adapter",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-metrics",
+        "@mojaloop/central-services-error-handling",
+        "@mojaloop/central-services-logger",
         "@mojaloop/event-sdk",
         "@mojaloop/central-services-stream",
         "@mojaloop/central-services-shared",
@@ -453,6 +462,9 @@
     {
       "packageName": "quoting-service",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-metrics",
+        "@mojaloop/central-services-error-handling",
+        "@mojaloop/central-services-logger",
         "@mojaloop/central-services-shared",
         "@mojaloop/central-services-stream",
         "@mojaloop/event-sdk",
@@ -464,6 +476,8 @@
     {
       "packageName": "ml-testing-toolkit",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-metrics",
+        "@mojaloop/central-services-logger",
         "@mojaloop/ml-schema-transformer-lib",
         "@mojaloop/sdk-standard-components"
       ],
@@ -472,6 +486,7 @@
     {
       "packageName": "@mojaloop/ml-testing-toolkit-client-lib",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-logger",
         "@mojaloop/sdk-standard-components",
         "@mojaloop/central-services-shared"
       ],
@@ -484,6 +499,8 @@
     {
       "packageName": "@mojaloop/als-msisdn-oracle-svc",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-metrics",
+        "@mojaloop/central-services-error-handling",
         "@mojaloop/sdk-standard-components",
         "@mojaloop/central-services-shared"
       ],
@@ -496,6 +513,8 @@
     {
       "packageName": "@mojaloop/sdk-scheme-adapter-api-svc",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-metrics",
+        "@mojaloop/central-services-logger",
         "@mojaloop/central-services-shared",
         "@mojaloop/event-sdk",
         "@mojaloop/ml-schema-transformer-lib",
@@ -528,6 +547,9 @@
     {
       "packageName": "@mojaloop/central-services-shared",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-metrics",
+        "@mojaloop/central-services-logger",
+        "@mojaloop/sdk-standard-components",
         "@mojaloop/event-sdk"
       ],
       "projectFolder": "central-services-shared"
@@ -552,6 +574,22 @@
         "@mojaloop/central-services-stream"
       ],
       "projectFolder": "event-sdk"
+    },
+    {
+      "packageName": "ml-testing-toolkit-ui",
+      "projectFolder": "ml-testing-toolkit-ui"
+    },
+    {
+      "packageName": "@mojaloop/central-services-logger",
+      "projectFolder": "central-services-logger"
+    },
+    {
+      "packageName": "@mojaloop/central-services-error-handling",
+      "projectFolder": "central-services-error-handling"
+    },
+    {
+      "packageName": "@mojaloop/central-services-metrics",
+      "projectFolder": "central-services-metrics"
     }
   ]
 }

@@ -195,11 +195,15 @@
    * PNPM documentation: https://pnpm.io/package_json#pnpmoverrides
    */
   "globalOverrides": {
+    "@mojaloop/central-services-error-handling": "workspace:*",
+    "@mojaloop/central-services-logger": "workspace:*",
+    "@mojaloop/central-services-metrics": "workspace:*",
     "@mojaloop/central-services-shared": "workspace:*",
     "@mojaloop/central-services-stream": "workspace:*",
     "@mojaloop/event-sdk": "workspace:*",
     "@mojaloop/ml-schema-transformer-lib": "workspace:*",
-    "@mojaloop/sdk-standard-components": "workspace:*"
+    "@mojaloop/sdk-standard-components": "workspace:*",
+    "ml-testing-toolkit-ui": "workspace:*"
   },
 
   /**

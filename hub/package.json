@@ -11,10 +11,11 @@
         "test": "./scripts/test.sh"
     },
     "dependencies": {
+        "@opentelemetry/auto-instrumentations-node": "^0.56.1",
         "@mojaloop/als-msisdn-oracle-svc": "workspace:*",
         "@mojaloop/central-ledger": "workspace:*",
         "@mojaloop/central-services-shared": "workspace:*",
-        "@mojaloop/central-services-metrics": "12.4.3",
+        "@mojaloop/central-services-metrics": "workspace:*",
         "@mojaloop/event-sdk": "workspace:*",
         "@mojaloop/ml-api-adapter": "workspace:*",
         "@mojaloop/ml-schema-transformer-lib": "workspace:*",

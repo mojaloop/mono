@@ -1,0 +1,8 @@
+GET http://localhost:3001/participants/test/endpoints
+Content-Type: application/json
+Accept: application/vnd.interoperability.transactionRequests+json;version=2
+Date: Mon, 23 Jan 2017 15:35:47 GMT
+fspiop-source: payerfsp
+fspiop-destination: payeefsp
+traceparent: 00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01
+baggage: errorExpect=CL.2001; test2=456

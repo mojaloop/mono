@@ -58,3 +58,19 @@
 	path = sdk-standard-components
 	url = https://github.com/mojaloop/sdk-standard-components.git
 	branch = monorepo
+[submodule "ml-testing-toolkit-ui"]
+	path = ml-testing-toolkit-ui
+	url = https://github.com/mojaloop/ml-testing-toolkit-ui.git
+	branch = main
+[submodule "central-services-logger"]
+	path = central-services-logger
+	url = https://github.com/mojaloop/central-services-logger.git
+	branch = master
+[submodule "central-services-error-handling"]
+	path = central-services-error-handling
+	url = https://github.com/mojaloop/central-services-error-handling.git
+	branch = master
+[submodule "central-services-metrics"]
+	path = central-services-metrics
+	url = https://github.com/mojaloop/central-services-metrics.git
+	branch = master

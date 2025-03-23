@@ -11,7 +11,7 @@ process.env.API_TYPE ||= 'iso20022'
 process.env.FEE_MULTIPLIER ||= '0.05'
 process.env.ILP_VERSION ||= '4'
 
-const { resolve } = require('path')
+const { resolve, dirname } = require('path')
 
 async function discovery() {
     const als = require('account-lookup-service/src/server')
@@ -70,6 +70,7 @@ async function ledger() {
 }
 
 async function ttk() {
+    process.env.TTK_ROOT = dirname(require.resolve('ml-testing-toolkit/package.json'))
     const RequestLogger = require('ml-testing-toolkit/src/lib/requestLogger')
     const apiServer = require('ml-testing-toolkit/src/lib/api-server')
     const socketServer = require('ml-testing-toolkit/src/lib/socket-server')
