@@ -513,6 +513,7 @@
     {
       "packageName": "@mojaloop/sdk-scheme-adapter-api-svc",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-error-handling",
         "@mojaloop/central-services-metrics",
         "@mojaloop/central-services-logger",
         "@mojaloop/central-services-shared",
