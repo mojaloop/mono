@@ -543,11 +543,15 @@
     },
     {
       "packageName": "@mojaloop/central-services-stream",
-      "projectFolder": "central-services-stream"
+      "projectFolder": "central-services-stream",
+      "decoupledLocalDependencies": [
+        "@mojaloop/central-services-error-handling"
+      ]
     },
     {
       "packageName": "@mojaloop/central-services-shared",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-error-handling",
         "@mojaloop/central-services-metrics",
         "@mojaloop/central-services-logger",
         "@mojaloop/sdk-standard-components",
@@ -558,6 +562,7 @@
     {
       "packageName": "@mojaloop/ml-schema-transformer-lib",
       "decoupledLocalDependencies": [
+        "@mojaloop/central-services-error-handling",
         "@mojaloop/central-services-shared"
       ],
       "projectFolder": "ml-schema-transformer-lib"
