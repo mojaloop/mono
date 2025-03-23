@@ -508,7 +508,10 @@
     },
     {
       "packageName": "mojaloop-simulator",
-      "projectFolder": "mojaloop-simulator"
+      "projectFolder": "mojaloop-simulator",
+      "decoupledLocalDependencies": [
+        "@mojaloop/central-services-logger"
+      ]
     },
     {
       "packageName": "@mojaloop/sdk-scheme-adapter-api-svc",
@@ -545,7 +548,8 @@
       "packageName": "@mojaloop/central-services-stream",
       "projectFolder": "central-services-stream",
       "decoupledLocalDependencies": [
-        "@mojaloop/central-services-error-handling"
+        "@mojaloop/central-services-error-handling",
+        "@mojaloop/central-services-logger"
       ]
     },
     {
@@ -563,6 +567,7 @@
       "packageName": "@mojaloop/ml-schema-transformer-lib",
       "decoupledLocalDependencies": [
         "@mojaloop/central-services-error-handling",
+        "@mojaloop/central-services-logger",
         "@mojaloop/central-services-shared"
       ],
       "projectFolder": "ml-schema-transformer-lib"
@@ -570,14 +575,16 @@
     {
       "packageName": "@mojaloop/sdk-standard-components",
       "decoupledLocalDependencies": [
-        "@mojaloop/ml-schema-transformer-lib"
+        "@mojaloop/ml-schema-transformer-lib",
+        "@mojaloop/central-services-logger"
       ],
       "projectFolder": "sdk-standard-components"
     },
     {
       "packageName": "@mojaloop/event-sdk",
       "decoupledLocalDependencies": [
-        "@mojaloop/central-services-stream"
+        "@mojaloop/central-services-stream",
+        "@mojaloop/central-services-logger"
       ],
       "projectFolder": "event-sdk"
     },
