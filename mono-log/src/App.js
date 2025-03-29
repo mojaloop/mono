@@ -1,8 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import LogDisplay from './LogDisplay.js';
+import { FilterMatchMode } from 'primereact/api/api.esm.js';
+
+const filters = {
+    level: { value: '', matchMode: FilterMatchMode.IN },
+    context: { value: '', matchMode: FilterMatchMode.IN },
+    component: { value: '', matchMode: FilterMatchMode.IN },
+    type: { value: '', matchMode: FilterMatchMode.IN },
+    method: { value: '', matchMode: FilterMatchMode.IN }
+};
 
 const App = () => {
   const [logMessages, setLogMessages] = useState([]);
+  const [dropDowns, setDropDowns] = useState({});
   const ws = useRef(null);
 
   useEffect(() => {
@@ -17,6 +27,15 @@ const App = () => {
       if (logMessages.length > 1000) {
         logMessages.pop();
       }
+      setDropDowns(prev => {
+        Object.keys(filters).forEach(key => {
+          if (typeof logMessage[key] === 'string') {
+            prev[key] = prev[key] ?? new Set();
+            prev[key].add(logMessage[key]);
+          }
+        });
+        return prev;
+      });
       setLogMessages((prevMessages) => [logMessage, ...prevMessages]);
     };
     ws.current.onclose = event => {
@@ -32,7 +51,7 @@ const App = () => {
   }, []);
 
   return (
-      <LogDisplay logMessages={logMessages} />
+      <LogDisplay logMessages={logMessages} dropDowns={dropDowns} filters={filters} />
   );
 };
 

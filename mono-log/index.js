@@ -5,9 +5,10 @@ import { WebSocketServer, WebSocket } from 'ws';
 import { LRUCache } from 'lru-cache';
 import split2 from 'split2';
 
-const udpPort = 41234;
-
-const init = async () => {
+const init = async ({
+    port = 5170,
+    streamId = false
+} = {}) => {
     const server = Hapi.server({
         port: 8080,
         host: '0.0.0.0'
@@ -97,16 +98,15 @@ const init = async () => {
         });
         result.on('close', () => {
             cache.del(id);
-            udpServer.send(JSON.stringify({method: 'uuid'}), rinfo.port, rinfo.address); // notify sender to generate new stream id
+            udpServer.send(JSON.stringify({method: 'restart'}), rinfo.port, rinfo.address); // notify sender to generate new stream id
         });
         return result;
     };
 
-
     udpServer.on('message', (msg, rinfo) => {
-        const id = msg.subarray(0, 16).toString('hex');
+        const id = streamId ? msg.subarray(0, 16).toString('hex') : rinfo.address + ':' + rinfo.port;
         const stream = cache.get(id) || createStream(id, rinfo);
-        stream.write(msg.subarray(16));
+        stream.write(streamId ? msg.subarray(16) : msg);
     });
 
     udpServer.on('close', () => {
@@ -119,7 +119,7 @@ const init = async () => {
     });
 
     udpServer.bind({
-        port: udpPort,
+        port,
         exclusive: true
     });
 
