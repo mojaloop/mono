@@ -14,10 +14,18 @@ const App = () => {
   const [logMessages, setLogMessages] = useState([]);
   const [dropDowns, setDropDowns] = useState({});
   const ws = useRef(null);
+  const [reconnect, setReconnect] = useState({})
+  const triggerReconnect = () => setTimeout(() => setReconnect({}), 1000);
 
   useEffect(() => {
-    ws.current = new WebSocket('//' + window.location.host.replace(':3000', ':8080'));
-    ws.current.onmessage = (event) => {
+    console.log('Connecting to WebSocket...');
+    const connection = {
+      socket: new WebSocket('//' + window.location.host.replace(':3000', ':8080')),
+      reconnect: true
+    }
+    ws.current = connection;
+
+    connection.socket.onmessage = (event) => {
       let logMessage = event.data;
       try {
         logMessage = JSON.parse(event.data);
@@ -38,17 +46,23 @@ const App = () => {
       });
       setLogMessages((prevMessages) => [logMessage, ...prevMessages]);
     };
-    ws.current.onclose = event => {
-      console.log('WebSocket closed', event);
+    connection.socket.onopen = event => {
+      console.log(connection.socket.url, ' connected');
     };
-    ws.current.onerror = event => {
-      console.error('WebSocket error', event);
+    connection.socket.onclose = event => {
+      console.log(connection.socket.url, ' closed');
+      if (connection.reconnect) triggerReconnect();
+    };
+    connection.socket.onerror = event => {
+      console.error(connection.socket.url, ' error', event);
     };
 
     return () => {
-      ws.current.close();
+      console.log('Cleaning up WebSocket...');
+      connection.reconnect = false;
+      connection.socket.close();
     };
-  }, []);
+  }, [reconnect]);
 
   return (
       <LogDisplay logMessages={logMessages} dropDowns={dropDowns} filters={filters} />
