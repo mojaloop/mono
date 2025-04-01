@@ -97,7 +97,7 @@ const init = async ({
             result.destroy();
         });
         result.on('close', () => {
-            cache.del(id);
+            cache.delete(id);
             udpServer.send(JSON.stringify({method: 'restart'}), rinfo.port, rinfo.address); // notify sender to generate new stream id
         });
         return result;
