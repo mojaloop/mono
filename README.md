@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/en/download/) version 18 or 20
+- [Node.js](https://nodejs.org/en/download/) version 18, 20 or 22
 - [Docker](https://docs.docker.com/get-docker/) (and docker compose)
 
 ## Setup
