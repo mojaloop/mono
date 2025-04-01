@@ -24,7 +24,7 @@ const string = (value) => {
 const stringBody = (rowData, options) => string(rowData[options.field]);
 
 const format = (data) => {
-    if (typeof data === 'object') {
+    if (data && typeof data === 'object') {
         return Object.keys(data).map(key => {
             return (
                 <div key={key} style={{ marginLeft: '1rem', whiteSpace: 'pre-wrap'}}>
