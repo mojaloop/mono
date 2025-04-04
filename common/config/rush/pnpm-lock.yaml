@@ -1866,9 +1866,6 @@ importers:
       react-markdown:
         specifier: 8.0.7
         version: 8.0.7(@types/react@16.8.7)(react@17.0.2)
-      react-refresh:
-        specifier: ^0.17.0
-        version: 0.17.0
       react-router-dom:
         specifier: ^5.2.0
         version: 5.3.4(react@17.0.2)
@@ -16631,10 +16628,6 @@ packages:
 
   react-refresh@0.11.0:
     resolution: {integrity: sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==}
-    engines: {node: '>=0.10.0'}
-
-  react-refresh@0.17.0:
-    resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
     engines: {node: '>=0.10.0'}
 
   react-refresh@0.8.3:
@@ -38884,8 +38877,6 @@ snapshots:
       - supports-color
 
   react-refresh@0.11.0: {}
-
-  react-refresh@0.17.0: {}
 
   react-refresh@0.8.3: {}
 
