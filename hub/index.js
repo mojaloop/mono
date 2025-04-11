@@ -43,6 +43,12 @@ async function adapter() {
     await ma.initialize({
         service: 'api',
         port: maConfig.PORT,
+        modules: [!maConfig.INSTRUMENTATION_METRICS_DISABLED && MetricsPlugin].filter(Boolean)
+    })
+
+    await ma.initialize({
+        service: 'handler',
+        port: 3009,
         modules: [!maConfig.INSTRUMENTATION_METRICS_DISABLED && MetricsPlugin].filter(Boolean),
         handlers: [{ type: 'notification', enabled: true }],
         runHandlers: true
@@ -71,6 +77,15 @@ async function ledger() {
 
 async function ttk() {
     process.env.TTK_ROOT = dirname(require.resolve('ml-testing-toolkit/package.json'))
+    // process.env.TTK_SYSTEM_CONFIG = JSON.stringify({
+    //     PARALLEL_RUN_ENABLED: true
+    // })
+    await require('ml-testing-toolkit/src/lib/rulesEngineModel').setTestRules({
+        response: require.resolve('@mojaloop/testing-toolkit-test-cases/rules/hub/rules_response/default.json'),
+        callback: require.resolve('@mojaloop/testing-toolkit-test-cases/rules/hub/rules_callback/default.json'),
+        validation: require.resolve('@mojaloop/testing-toolkit-test-cases/rules/hub/rules_validation/default.json'),
+        // forward: require.resolve('@mojaloop/testing-toolkit-test-cases/rules/hub/rules_forward/default.json')
+    })
     const RequestLogger = require('ml-testing-toolkit/src/lib/requestLogger')
     const apiServer = require('ml-testing-toolkit/src/lib/api-server')
     const socketServer = require('ml-testing-toolkit/src/lib/socket-server')
@@ -80,8 +95,8 @@ async function ttk() {
     const reportGenerator = require('ml-testing-toolkit/src/lib/report-generator/generator')
 
     RequestLogger.logMessage('info', 'Toolkit Initialization started...', { notification: false })
-    await Config.loadSystemConfig()
-    await Config.loadUserConfig()
+    await Config.loadSystemConfig(require.resolve('./config/system_config.json'))
+    await Config.loadUserConfig(undefined, require.resolve('./config/user_config.json'))
     apiServer.startServer(5050)
     socketServer.initServer(apiServer.getHttp())
     const systemConfig = Config.getSystemConfig()
@@ -103,13 +118,17 @@ async function ttkClient(what) {
         reportName: 'report',
         reportAutoFilenameEnable: false,
         breakRunOnError: false,
-        saveReport: false,
+        saveReport: 'true',
         saveReportBaseUrl: null,
         extraSummaryInformation: '',
         environmentFile: require.resolve('./hub.json'),
+        batchSize: {
+            // provision: 4,
+            // gp: 4
+        }[what] || 1,
         // labels: 'prod-tests',
         inputFiles: [
-            what === 'gp'  && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer'),
+            what === 'gp' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer'),
             what === 'provision' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path'),
             what === 'settlement' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/other_tests/settlement_fx/settlement_tests.json')
         ].filter(Boolean).join(',')
