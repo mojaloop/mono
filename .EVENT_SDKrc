@@ -1,2 +1,2 @@
-LOG_FILTER=log:error, log:warning
+LOG_FILTER=audit:*
 LOG_LEVEL=warn

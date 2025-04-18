@@ -12,7 +12,7 @@ const filters = {
 
 const App = () => {
   const [logMessages, setLogMessages] = useState([]);
-  const [dropDowns, setDropDowns] = useState({});
+  const [dropDowns, setDropDowns] = useState({level: new Set(['debug', 'info', 'warn', 'error', 'trace', 'fatal'])});
   const ws = useRef(null);
   const [reconnect, setReconnect] = useState({})
   const triggerReconnect = () => setTimeout(() => setReconnect({}), 1000);

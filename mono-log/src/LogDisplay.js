@@ -22,7 +22,6 @@ const string = (value) => {
     } else return JSON.stringify(value);
 }
 const stringBody = (rowData, options) => string(rowData[options.field]);
-
 const format = (data) => {
     if (data && typeof data === 'object') {
         return Object.keys(data).map(key => {
@@ -36,9 +35,7 @@ const format = (data) => {
         return <span className={typeof data === 'string' ? '' : 'text-green-600'}>{string(data)}</span>;
     }
 }
-
 const messageBody = (rowData) => rowData?.[FORMAT] ? format(rowData) : (string(rowData?.message) ?? JSON.stringify(rowData));
-
 const filterElement = levels => (options) => {
     return (
         <MultiSelect
@@ -54,12 +51,9 @@ const filterElement = levels => (options) => {
         />
     );
 };
-
-const toggle = state => !state;
-
-function useToggle(initialValue = false) {
-    return React.useReducer(toggle, initialValue);
-}
+const useToggle = initialValue => React.useReducer(state => !state, initialValue)
+const virtualScrollerOptions = { itemSize: 30 }
+const columnStyle = { width: "10rem" }
 
 const LogDisplay = ({ logMessages, dropDowns, filters }) => {
 
@@ -77,7 +71,45 @@ const LogDisplay = ({ logMessages, dropDowns, filters }) => {
             options[key] = filterElement(Array.from(dropDowns[key]).map(value => ({ name: value, value })));
         }
         return options;
-    }, {}), [Object.values(dropDowns).map(set => Array.from(set).sort().join()).join()]);
+    }, {x: console.log('[dropdowns]')}), [Object.values(dropDowns).map(set => Array.from(set).sort().join()).join()]);
+
+    const Columns = React.useMemo(() => [
+        <Column sortable style={columnStyle} field="ms" key="Time" header="Time"
+            body={timeBody}
+        />,
+        <Column style={columnStyle} field="level" key="Level" header="Level"
+            filter
+            filterElement={filterElements.level}
+            showFilterMenu={false}
+            bodyClassName={bodyClassName}
+            body={stringBody}
+        />,
+        <Column style={columnStyle} field="context" key="Context" header="Context"
+            filter
+            filterElement={filterElements.context}
+            showFilterMenu={false}
+            body={stringBody}
+        />,
+        <Column style={columnStyle} field="component" key="Component" header="Component"
+            filter
+            filterElement={filterElements.component}
+            showFilterMenu={false}
+            body={stringBody}
+        />,
+        <Column style={columnStyle} field="type" key="Type" header="Type"
+            filter
+            filterElement={filterElements.type}
+            showFilterMenu={false}
+            body={stringBody}
+        />,
+        <Column style={columnStyle} field="method" key="Method" header="Method"
+            filter
+            filterElement={filterElements.method}
+            showFilterMenu={false}
+            body={stringBody}
+        />,
+        <Column style={columnStyle} field="message" key="Message" header="Message" body={messageBody} />
+    ], [filterElements.level, filterElements.context, filterElements.component, filterElements.type, filterElements.method]);
 
     return (
         <div className="flex-1">
@@ -86,9 +118,11 @@ const LogDisplay = ({ logMessages, dropDowns, filters }) => {
                 sortMode="multiple"
                 sortField="ms"
                 multiSortMeta={defaultSort}
+                dataKey="ulid"
                 size="small"
                 scrollable
                 scrollHeight="flex"
+                virtualScrollerOptions={virtualScrollerOptions}
                 showGridlines
                 removableSort
                 resizableColumns
@@ -99,43 +133,7 @@ const LogDisplay = ({ logMessages, dropDowns, filters }) => {
                 filterDisplay="row"
                 onCellClick={handleCellClick}
                 cellSelection
-            >
-                <Column sortable style={{ width: "10rem" }} field="ms" header="Time"
-                    body={timeBody}
-                />
-                <Column style={{ width: "10rem" }} field="level" header="Level"
-                    filter
-                    filterElement={filterElements.level}
-                    showFilterMenu={false}
-                    bodyClassName={bodyClassName}
-                    body={stringBody}
-                />
-                <Column style={{ width: "10rem" }} field="context" header="Context"
-                    filter
-                    filterElement={filterElements.context}
-                    showFilterMenu={false}
-                    body={stringBody}
-                />
-                <Column style={{ width: "10rem" }} field="component" header="Component"
-                    filter
-                    filterElement={filterElements.component}
-                    showFilterMenu={false}
-                    body={stringBody}
-                />
-                <Column style={{ width: "10rem" }} field="type" header="Type"
-                    filter
-                    filterElement={filterElements.type}
-                    showFilterMenu={false}
-                    body={stringBody}
-                />
-                <Column style={{ width: "10rem" }} field="method" header="Method"
-                    filter
-                    filterElement={filterElements.method}
-                    showFilterMenu={false}
-                    body={stringBody}
-                />
-                <Column style={{ width: "10rem" }} field="message" header="Message" body={messageBody} />
-            </DataTable>
+            >{Columns}</DataTable>
         </div>
     );
 };

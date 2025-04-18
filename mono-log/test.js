@@ -1,7 +1,7 @@
 import dgram from 'node:dgram';
 import { type } from 'node:os';
 
-const udpPort = 41234;
+const udpPort = 5170;
 const udpHost = 'localhost';
 
 const client = dgram.createSocket('udp4');
@@ -16,7 +16,7 @@ const sendLogMessage = () => {
         type: 'request',
         message: 'Hello, world!',
     }));
-    client.send(message, udpPort, udpHost, (err) => {
+    client.send(message + '\n', udpPort, udpHost, (err) => {
         if (err) {
             console.error('Error sending message:', err);
         } else {
