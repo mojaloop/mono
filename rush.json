@@ -588,10 +588,10 @@
       ],
       "projectFolder": "event-sdk"
     },
-    {
-      "packageName": "ml-testing-toolkit-ui",
-      "projectFolder": "ml-testing-toolkit-ui"
-    },
+    // {
+    //   "packageName": "ml-testing-toolkit-ui",
+    //   "projectFolder": "ml-testing-toolkit-ui"
+    // },
     {
       "packageName": "@mojaloop/central-services-logger",
       "projectFolder": "central-services-logger"
