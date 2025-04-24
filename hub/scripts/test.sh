@@ -16,8 +16,8 @@ echo "====================="
 UV_THREADPOOL_SIZE=30 node index.js test provision || true
 
 echo "====================="
-echo "Running GP"
+echo "Running P2P"
 echo "====================="
-UV_THREADPOOL_SIZE=30 node index.js test gp || true
+UV_THREADPOOL_SIZE=30 node index.js test p2p || true
 
 docker compose stop

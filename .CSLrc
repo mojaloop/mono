@@ -1,3 +1,2 @@
-; LOG_LEVEL=info
-LOG_LEVEL=warn
-; LOG_TRANSPORT={"console":{},"udp":{"host":"localhost"}}
+LOG_LEVEL=info
+LOG_TRANSPORT={"console":{"level":"warn"},"udp":{"host":"localhost","level":"info"}}

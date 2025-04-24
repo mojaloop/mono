@@ -120,8 +120,9 @@ async function ttkClient(what) {
         }[what] || 1,
         // labels: 'prod-tests',
         inputFiles: [
-            what === 'gp' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer'),
-            what === 'p2p' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer/p2p_happy_path.json'),
+            what === 'gp' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests'),
+            what === 'p2p' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer'),
+            what === 'p2p-ttk' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/golden_path/feature_tests/p2p_money_transfer/p2p_happy_path_with_balance_checks_ttk.json'),
             what === 'provision' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/provisioning/for_golden_path'),
             what === 'settlement' && resolve(__dirname, '../testing-toolkit-test-cases/collections/hub/other_tests/settlement_fx/settlement_tests.json')
         ].filter(Boolean).join(',')
@@ -154,8 +155,8 @@ async function simulator() {
         SIM_NAME : 'payeefsp',
         SQLITE_LOG_FILE : ':memory:',
         TEST_API_LISTEN_PORT : 3011,
-        // SERVER_CERT_PATH : '/secrets/servercert.pem',
-        // SERVER_KEY_PATH : '/secrets/serverkey.pem',
+        // SERVER_CERT_PATH : '/secrets/server-cert.pem',
+        // SERVER_KEY_PATH : '/secrets/server-key.pem',
         // SIM_BACKEND_SERVICE_NAME : 'sim-payeefsp-backend',
         // SIM_CACHE_SERVICE_NAME : 'sim-payeefsp-cache',
         // SIM_SCHEME_ADAPTER_SERVICE_NAME : 'sim-payeefsp-scheme-adapter',

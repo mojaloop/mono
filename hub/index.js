@@ -13,6 +13,7 @@ process.env.ILP_VERSION ||= '4'
 
 function action(what, options, command) {
     if (options.otel) {
+        process.env.OTEL_EXPORTER_OTLP_PROTOCOL ||= 'http/json'
         process.env.OTEL_LOGS_EXPORTER ||= 'none'
         // process.env.OTEL_TRACES_EXPORTER ||= 'none'
         process.env.OTEL_METRICS_EXPORTER ||= 'none'
@@ -21,6 +22,7 @@ function action(what, options, command) {
         process.env.OTEL_RESOURCE_ATTRIBUTES ||= 'service.name=hub'
         process.env.OTEL_PROPAGATORS ||= 'tracecontext,baggage'
         require('@opentelemetry/auto-instrumentations-node/register')
+        require('./otel')
     }
     return require('./action')(what, options, command.name())
 }

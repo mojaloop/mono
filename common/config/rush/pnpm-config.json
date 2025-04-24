@@ -202,8 +202,7 @@
     "@mojaloop/central-services-stream": "workspace:*",
     "@mojaloop/event-sdk": "workspace:*",
     "@mojaloop/ml-schema-transformer-lib": "workspace:*",
-    "@mojaloop/sdk-standard-components": "workspace:*",
-    "ml-testing-toolkit-ui": "workspace:*"
+    "@mojaloop/sdk-standard-components": "workspace:*"
   },
 
   /**
