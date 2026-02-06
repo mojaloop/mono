@@ -1,0 +1,13 @@
+name: Release
+run-name: Release => ${{  github.event.head_commit.message }}
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    uses: infitx-org/actions/.github/workflows/release-docker.yaml@main
+    secrets:
+      token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+      REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}

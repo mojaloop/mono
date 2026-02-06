@@ -1,0 +1,10 @@
+name: Build
+run-name: Build => ${{ github.event.pull_request.title }}
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: infitx-org/actions/.github/workflows/rush.yaml@main
