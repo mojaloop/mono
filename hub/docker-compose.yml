@@ -32,7 +32,7 @@ services:
       start_period: 40s
       interval: 30s
   kafka:
-    image: bitnami/kafka:3.5
+    image: soldevelo/kafka:3.5
     container_name: hub-kafka
     ports:
       - 9092:9092
@@ -63,7 +63,7 @@ services:
 
   init-kafka:
     container_name: hub-init-kafka
-    image: docker.io/bitnami/kafka:3.5
+    image: docker.io/soldevelo/kafka:3.5
     depends_on:
       - kafka
     configs:
